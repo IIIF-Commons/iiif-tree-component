@@ -1,0 +1,29 @@
+{
+  "name": "iiif-tree-component",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edsilv/iiif-tree-component.git"
+  },
+  "author": "Edward Silverton <e.silverton@gmail.com> (http://edsilv.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edsilv/iiif-tree-component/issues"
+  },
+  "homepage": "https://github.com/edsilv/iiif-tree-component#readme",
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-typescript": "^2.13.4",
+    "merge2": "^1.0.2",
+    "run-sequence": "^1.2.1",
+    "ts-loader": "^0.8.2",
+    "webpack-stream": "^3.2.0"
+  }
+}
