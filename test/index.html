@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>iiif-tree-component: test</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/virtex.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
+    <script src="js/manifesto.js"></script>
+</head>
+<body>
+    
+    <div id="component" class="iiif-tree-component"></div>
+    
+    <script src="js/iiif-tree-component.js"></script>
+    
+    <script>
+        
+        var component;
+        
+        $(function() {
+
+            component = IIIFTreeComponent.create({
+                element: "#component"
+            });
+            
+        });
+    </script>
+</body>
+</html>
