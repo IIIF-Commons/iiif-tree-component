@@ -1,3 +1,7 @@
 # iiif-tree-component
 
-    npm install -g webpack
+    npm install
+    
+    gulp
+    
+    gulp test
