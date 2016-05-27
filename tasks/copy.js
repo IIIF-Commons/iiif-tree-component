@@ -12,7 +12,8 @@ gulp.task('copy:build', function() {
 
 gulp.task('copy:libs', function() {
     return gulp.src([
-        'node_modules/manifesto.js/dist/client/manifesto.js'
+        'node_modules/manifesto.js/dist/client/manifesto.js',
+        'node_modules/eventemitter2/lib/eventemitter2.js'
     ]).pipe(gulp.dest('./test/js'));
 });
 

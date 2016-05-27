@@ -12,6 +12,9 @@ var IIIFTreeComponent;
             this._$element.append("I am a tree component");
             this._resize();
         }
+        Component.prototype.test = function () {
+            this.emit('test'); // todo: nicer way to cast 'this'?
+        };
         Component.prototype._init = function () {
             this._$element = $(this.options.element);
             this._$element.empty();
@@ -29,6 +32,14 @@ var IIIFTreeComponent;
         return Component;
     }());
     IIIFTreeComponent.Component = Component;
+    applyMixins(Component, [EventEmitter2]);
+    function applyMixins(derivedCtor, baseCtors) {
+        baseCtors.forEach(function (baseCtor) {
+            Object.getOwnPropertyNames(baseCtor.prototype).forEach(function (name) {
+                derivedCtor.prototype[name] = baseCtor.prototype[name];
+            });
+        });
+    }
 })(IIIFTreeComponent || (IIIFTreeComponent = {}));
 
 global.IIIFTreeComponent = module.exports = {

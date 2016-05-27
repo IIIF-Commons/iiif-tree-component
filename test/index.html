@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/iiifTreeComponent.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
     <script src="js/manifesto.js"></script>
+    <script src="js/eventemitter2.js"></script>
 </head>
 <body>
     
@@ -14,7 +15,7 @@
     <script src="js/iiif-tree-component.js"></script>
     
     <script>
-        
+
         var component;
         
         $(function() {
@@ -22,6 +23,12 @@
             component = IIIFTreeComponent.create({
                 element: "#component"
             });
+            
+            component.on('test', function() {
+                alert('test event!')
+            });
+            
+            component.test();
             
         });
     </script>

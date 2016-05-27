@@ -32,5 +32,8 @@
     "run-sequence": "^1.2.1",
     "through2": "^2.0.1",
     "yargs": "^4.7.1"
+  },
+  "dependencies": {
+    "eventemitter2": "^1.0.3"
   }
 }

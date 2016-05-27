@@ -10,7 +10,8 @@ var GulpConfig = (function () {
         this.tsSrc = [
             'src/_references.ts',
             'src/*.ts',
-            'typings/*.ts'];
+            'typings/*.ts',
+            'typings/**/*.ts'];
         this.tsConfig = {
             declarationFiles: true,
             noExternalResolve: true,

@@ -1,11 +1,15 @@
+declare var EventEmitter2: IEventEmitter2;
+
 module IIIFTreeComponent {
     export class Component {
 
         public options: IOptions;
 
         private _$element: JQuery;
+        private _$tree: JQuery;
 
         constructor(options: IOptions) {
+
             this.options = $.extend(this._getDefaultOptions(), options);
             
             this._init();
@@ -15,6 +19,10 @@ module IIIFTreeComponent {
             this._resize();
         }
         
+        public test(): void {
+            (<any>this).emit('test'); // todo: nicer way to cast 'this'?
+        }
+     
         private _init(): boolean {
 
             this._$element = $(this.options.element);
@@ -24,7 +32,7 @@ module IIIFTreeComponent {
                 console.log('element not found');
                 return false;
             }
-            
+
             return true;
         }
         
@@ -36,5 +44,15 @@ module IIIFTreeComponent {
         _resize(): void {
             
         }
+    }
+    
+    applyMixins(Component, [EventEmitter2]);
+
+    function applyMixins(derivedCtor: any, baseCtors: any[]) {
+        baseCtors.forEach(baseCtor => {
+            Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+                derivedCtor.prototype[name] = baseCtor.prototype[name];
+            });
+        });
     }
 }
