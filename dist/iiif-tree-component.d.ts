@@ -31,9 +31,3 @@ declare module IIIFTreeComponent {
         element?: string;
     }
 }
-
-declare module IIIFTreeComponent {
-    class Mixable {
-        constructor();
-    }
-}

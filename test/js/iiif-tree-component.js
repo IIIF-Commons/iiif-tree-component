@@ -76,16 +76,6 @@ global.IIIFTreeComponent = module.exports = {
 
 
 
-var IIIFTreeComponent;
-(function (IIIFTreeComponent) {
-    var Mixable = (function () {
-        function Mixable() {
-        }
-        return Mixable;
-    }());
-    IIIFTreeComponent.Mixable = Mixable;
-})(IIIFTreeComponent || (IIIFTreeComponent = {}));
-
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
 });
