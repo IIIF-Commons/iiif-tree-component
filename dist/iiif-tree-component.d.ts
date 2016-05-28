@@ -1,33 +1,39 @@
 // iiif-tree-component v1.0.1 https://github.com/edsilv/iiif-tree-component#readme
 
 declare var EventEmitter2: IEventEmitter2;
-declare module IIIFTreeComponent {
+declare namespace IIIFComponents {
     class BaseComponent {
         constructor();
         emitEvent(event: string, ...args: any[]): void;
     }
 }
 
-declare module IIIFTreeComponent {
-    class Component extends BaseComponent {
-        options: IOptions;
-        private _$element;
-        private _$tree;
-        constructor(options: IOptions);
-        test(): void;
-        private _init();
-        private _getDefaultOptions();
-        _resize(): void;
+declare namespace IIIFComponents {
+    class Events {
+        static TEST: string;
     }
 }
 
 
 interface IIIIFTreeComponent {
-    create: (options: IIIFTreeComponent.IOptions) => IIIFTreeComponent.Component;
+    create: (options: IIIFComponents.ITreeComponentOptions) => IIIFComponents.TreeComponent;
 }
 
-declare module IIIFTreeComponent {
-    interface IOptions {
+declare namespace IIIFComponents {
+    interface ITreeComponentOptions {
         element?: string;
+    }
+}
+
+declare namespace IIIFComponents {
+    class TreeComponent extends BaseComponent {
+        options: ITreeComponentOptions;
+        private _$element;
+        private _$tree;
+        constructor(options: ITreeComponentOptions);
+        test(): void;
+        private _init();
+        private _getDefaultOptions();
+        _resize(): void;
     }
 }

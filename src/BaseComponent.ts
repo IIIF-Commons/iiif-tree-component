@@ -1,6 +1,6 @@
 declare var EventEmitter2: IEventEmitter2;
 
-module IIIFTreeComponent {
+namespace IIIFComponents {
     export class BaseComponent {
         constructor(){
 

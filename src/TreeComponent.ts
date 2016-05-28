@@ -1,12 +1,12 @@
-module IIIFTreeComponent {
-    export class Component extends BaseComponent {
+namespace IIIFComponents {
+    export class TreeComponent extends BaseComponent {
 
-        public options: IOptions;
+        public options: ITreeComponentOptions;
 
         private _$element: JQuery;
         private _$tree: JQuery;
 
-        constructor(options: IOptions) {
+        constructor(options: ITreeComponentOptions) {
             
             super();
             
@@ -20,7 +20,7 @@ module IIIFTreeComponent {
         }
 
         public test(): void {
-            this.emitEvent('test', [1, 2, 'three']);
+            this.emitEvent(Events.TEST, [1, 2, 'three']);
         }
 
         private _init(): boolean {
@@ -36,8 +36,8 @@ module IIIFTreeComponent {
             return true;
         }
         
-        private _getDefaultOptions(): IOptions {
-            return <IOptions>{
+        private _getDefaultOptions(): ITreeComponentOptions {
+            return <ITreeComponentOptions>{
             }
         }
         

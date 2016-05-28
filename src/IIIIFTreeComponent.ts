@@ -1,3 +1,3 @@
 interface IIIIFTreeComponent {
-    create: (options: IIIFTreeComponent.IOptions) => IIIFTreeComponent.Component;
+    create: (options: IIIFComponents.ITreeComponentOptions) => IIIFComponents.TreeComponent;
 }

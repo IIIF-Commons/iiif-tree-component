@@ -3,8 +3,8 @@
 (function (global){
 
 
-var IIIFTreeComponent;
-(function (IIIFTreeComponent) {
+var IIIFComponents;
+(function (IIIFComponents) {
     var BaseComponent = (function () {
         function BaseComponent() {
         }
@@ -17,7 +17,7 @@ var IIIFTreeComponent;
         };
         return BaseComponent;
     }());
-    IIIFTreeComponent.BaseComponent = BaseComponent;
+    IIIFComponents.BaseComponent = BaseComponent;
     applyMixins(BaseComponent, [EventEmitter2]);
     function applyMixins(derivedCtor, baseCtors) {
         baseCtors.forEach(function (baseCtor) {
@@ -26,28 +26,49 @@ var IIIFTreeComponent;
             });
         });
     }
-})(IIIFTreeComponent || (IIIFTreeComponent = {}));
+})(IIIFComponents || (IIIFComponents = {}));
+
+var IIIFComponents;
+(function (IIIFComponents) {
+    var Events = (function () {
+        function Events() {
+        }
+        Events.TEST = 'test';
+        return Events;
+    }());
+    IIIFComponents.Events = Events;
+})(IIIFComponents || (IIIFComponents = {}));
+
+global.IIIFTreeComponent = module.exports = {
+    create: function (options) {
+        return new IIIFComponents.TreeComponent(options);
+    }
+};
+
+
+
+
 
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var IIIFTreeComponent;
-(function (IIIFTreeComponent) {
-    var Component = (function (_super) {
-        __extends(Component, _super);
-        function Component(options) {
+var IIIFComponents;
+(function (IIIFComponents) {
+    var TreeComponent = (function (_super) {
+        __extends(TreeComponent, _super);
+        function TreeComponent(options) {
             _super.call(this);
             this.options = $.extend(this._getDefaultOptions(), options);
             this._init();
             this._$element.append("I am a tree component");
             this._resize();
         }
-        Component.prototype.test = function () {
-            this.emitEvent('test', [1, 2, 'three']);
+        TreeComponent.prototype.test = function () {
+            this.emitEvent(IIIFComponents.Events.TEST, [1, 2, 'three']);
         };
-        Component.prototype._init = function () {
+        TreeComponent.prototype._init = function () {
             this._$element = $(this.options.element);
             this._$element.empty();
             if (!this._$element.length) {
@@ -56,25 +77,15 @@ var IIIFTreeComponent;
             }
             return true;
         };
-        Component.prototype._getDefaultOptions = function () {
+        TreeComponent.prototype._getDefaultOptions = function () {
             return {};
         };
-        Component.prototype._resize = function () {
+        TreeComponent.prototype._resize = function () {
         };
-        return Component;
-    }(IIIFTreeComponent.BaseComponent));
-    IIIFTreeComponent.Component = Component;
-})(IIIFTreeComponent || (IIIFTreeComponent = {}));
-
-global.IIIFTreeComponent = module.exports = {
-    create: function (options) {
-        return new IIIFTreeComponent.Component(options);
-    }
-};
-
-
-
-
+        return TreeComponent;
+    }(IIIFComponents.BaseComponent));
+    IIIFComponents.TreeComponent = TreeComponent;
+})(IIIFComponents || (IIIFComponents = {}));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
