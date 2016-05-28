@@ -5,15 +5,47 @@
 
 var IIIFTreeComponent;
 (function (IIIFTreeComponent) {
-    var Component = (function () {
+    var BaseComponent = (function () {
+        function BaseComponent() {
+        }
+        BaseComponent.prototype.emitEvent = function (event) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            this.emit(event, args);
+        };
+        return BaseComponent;
+    }());
+    IIIFTreeComponent.BaseComponent = BaseComponent;
+    applyMixins(BaseComponent, [EventEmitter2]);
+    function applyMixins(derivedCtor, baseCtors) {
+        baseCtors.forEach(function (baseCtor) {
+            Object.getOwnPropertyNames(baseCtor.prototype).forEach(function (name) {
+                derivedCtor.prototype[name] = baseCtor.prototype[name];
+            });
+        });
+    }
+})(IIIFTreeComponent || (IIIFTreeComponent = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var IIIFTreeComponent;
+(function (IIIFTreeComponent) {
+    var Component = (function (_super) {
+        __extends(Component, _super);
         function Component(options) {
+            _super.call(this);
             this.options = $.extend(this._getDefaultOptions(), options);
             this._init();
             this._$element.append("I am a tree component");
             this._resize();
         }
         Component.prototype.test = function () {
-            this.emit('test'); // todo: nicer way to cast 'this'?
+            this.emitEvent('test', [1, 2, 'three']);
         };
         Component.prototype._init = function () {
             this._$element = $(this.options.element);
@@ -30,16 +62,8 @@ var IIIFTreeComponent;
         Component.prototype._resize = function () {
         };
         return Component;
-    }());
+    }(IIIFTreeComponent.BaseComponent));
     IIIFTreeComponent.Component = Component;
-    applyMixins(Component, [EventEmitter2]);
-    function applyMixins(derivedCtor, baseCtors) {
-        baseCtors.forEach(function (baseCtor) {
-            Object.getOwnPropertyNames(baseCtor.prototype).forEach(function (name) {
-                derivedCtor.prototype[name] = baseCtor.prototype[name];
-            });
-        });
-    }
 })(IIIFTreeComponent || (IIIFTreeComponent = {}));
 
 global.IIIFTreeComponent = module.exports = {
@@ -51,6 +75,16 @@ global.IIIFTreeComponent = module.exports = {
 
 
 
+
+var IIIFTreeComponent;
+(function (IIIFTreeComponent) {
+    var Mixable = (function () {
+        function Mixable() {
+        }
+        return Mixable;
+    }());
+    IIIFTreeComponent.Mixable = Mixable;
+})(IIIFTreeComponent || (IIIFTreeComponent = {}));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)

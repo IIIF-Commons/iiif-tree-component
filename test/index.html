@@ -24,8 +24,8 @@
                 element: "#component"
             });
             
-            component.on('test', function() {
-                alert('test event!')
+            component.on('test', function(args) {
+                console.log(args)
             });
             
             component.test();

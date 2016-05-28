@@ -2,7 +2,14 @@
 
 declare var EventEmitter2: IEventEmitter2;
 declare module IIIFTreeComponent {
-    class Component {
+    class BaseComponent {
+        constructor();
+        emitEvent(event: string, ...args: any[]): void;
+    }
+}
+
+declare module IIIFTreeComponent {
+    class Component extends BaseComponent {
         options: IOptions;
         private _$element;
         private _$tree;
@@ -22,5 +29,11 @@ interface IIIIFTreeComponent {
 declare module IIIFTreeComponent {
     interface IOptions {
         element?: string;
+    }
+}
+
+declare module IIIFTreeComponent {
+    class Mixable {
+        constructor();
     }
 }
