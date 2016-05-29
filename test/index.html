@@ -3,18 +3,17 @@
 <head>
     <title>iiif-tree-component: test</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="css/iiifTreeComponent.css" />
+    <link rel="stylesheet" type="text/css" href="css/iiif-tree-component.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
     <script src="js/eventemitter2.js"></script>
-    <script src="js/base-component.js"></script>
+    <script src="js/base-component.min.js"></script>
+    <script src="js/iiif-tree-component.js"></script>
     <script src="js/manifesto.js"></script>
 </head>
 <body>
     
-    <div id="component" class="iiif-tree-component"></div>
-    
-    <script src="js/iiif-tree-component.js"></script>
-    
+    <div id="tree"></div>
+
     <script>
 
         var component;
@@ -22,11 +21,11 @@
         $(function() {
 
             component = new IIIFComponents.TreeComponent({
-                element: "#component"
+                element: "#tree"
             });
             
             component.on('test', function(args) {
-                alert(args)
+                alert(args);
             });
             
             component.test();

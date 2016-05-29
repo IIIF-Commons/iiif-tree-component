@@ -17,11 +17,11 @@ namespace IIIFComponents {
         protected _init(): boolean {
             var success: boolean = super._init();
 
-            if (success){
-                this._$element.append("I am a tree component");
-            } else {
+            if (!success){
                 console.error("TreeComponent failed to initialise");
             }
+            
+            this._$element.append("I am a tree component");
 
             return success;
         }

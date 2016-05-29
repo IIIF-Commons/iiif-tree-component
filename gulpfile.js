@@ -9,4 +9,4 @@ gulp.task('default', function(cb) {
     runSequence('clean:dist', 'build', 'browserify', 'minify', 'prependHeaders', 'sync', cb);
 });
 
-gulp.task('sync', ['copy:build' ,'copy:typings', 'copy:libs']);
+gulp.task('sync', ['copy:build' ,'copy:typings', 'copy:deps']);
