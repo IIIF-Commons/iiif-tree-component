@@ -11,12 +11,13 @@
     "url": "git+https://github.com/edsilv/iiif-tree-component.git"
   },
   "author": "Edward Silverton <e.silverton@gmail.com> (http://edsilv.com)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/edsilv/iiif-tree-component/issues"
   },
   "homepage": "https://github.com/edsilv/iiif-tree-component#readme",
   "devDependencies": {
+    "base-component": "https://github.com/edsilv/base-component.git",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.1.0",
@@ -34,6 +35,6 @@
     "yargs": "^4.7.1"
   },
   "dependencies": {
-    "eventemitter2": "^1.0.3"
+    
   }
 }

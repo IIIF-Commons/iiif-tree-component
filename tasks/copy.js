@@ -12,6 +12,7 @@ gulp.task('copy:build', function() {
 
 gulp.task('copy:libs', function() {
     return gulp.src([
+        'node_modules/base-component/dist/base-component.js',
         'node_modules/manifesto.js/dist/client/manifesto.js',
         'node_modules/eventemitter2/lib/eventemitter2.js'
     ]).pipe(gulp.dest('./test/js'));
@@ -19,5 +20,6 @@ gulp.task('copy:libs', function() {
 
 gulp.task('copy:typings', function() {
     return gulp.src([
+        'node_modules/base-component/dist/base-component.d.ts',
     ]).pipe(gulp.dest('./typings'));
 });

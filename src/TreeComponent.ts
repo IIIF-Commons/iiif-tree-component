@@ -1,21 +1,12 @@
 namespace IIIFComponents {
-    export class TreeComponent extends BaseComponent implements ITreeComponent {
+    export class TreeComponent extends Components.BaseComponent implements ITreeComponent {
 
-        public options: ITreeComponentOptions;
-
-        private _$element: JQuery;
         private _$tree: JQuery;
 
         constructor(options: ITreeComponentOptions) {
-            
-            super();
-            
-            this.options = $.extend(this._getDefaultOptions(), options);
+            super(options);
             
             this._init();
-            
-            this._$element.append("I am a tree component");
-            
             this._resize();
         }
 
@@ -23,25 +14,24 @@ namespace IIIFComponents {
             this.emitEvent(Events.TEST, [1, 2, 'three']);
         }
 
-        private _init(): boolean {
+        protected _init(): boolean {
+            var success: boolean = super._init();
 
-            this._$element = $(this.options.element);
-            this._$element.empty();
-
-            if (!this._$element.length){
-                console.log('element not found');
-                return false;
+            if (success){
+                this._$element.append("I am a tree component");
+            } else {
+                console.error("TreeComponent failed to initialise");
             }
 
-            return true;
+            return success;
         }
         
-        private _getDefaultOptions(): ITreeComponentOptions {
+        protected _getDefaultOptions(): ITreeComponentOptions {
             return <ITreeComponentOptions>{
             }
         }
         
-        _resize(): void {
+        protected _resize(): void {
             
         }
     }
