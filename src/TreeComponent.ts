@@ -1,5 +1,5 @@
 namespace IIIFComponents {
-    export class TreeComponent extends BaseComponent {
+    export class TreeComponent extends BaseComponent implements ITreeComponent {
 
         public options: ITreeComponentOptions;
 
@@ -46,3 +46,11 @@ namespace IIIFComponents {
         }
     }
 }
+
+module.exports = (function(w) {
+    if (!w.IIIFComponents){
+        w.IIIFComponents = IIIFComponents;
+    } else {
+        w.IIIFComponents.TreeComponent = IIIFComponents.TreeComponent;
+    }
+})(window);

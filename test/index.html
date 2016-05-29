@@ -20,12 +20,12 @@
         
         $(function() {
 
-            component = IIIFTreeComponent.create({
+            component = new IIIFComponents.TreeComponent({
                 element: "#component"
             });
             
             component.on('test', function(args) {
-                console.log(args)
+                alert(args)
             });
             
             component.test();

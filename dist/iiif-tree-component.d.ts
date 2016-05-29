@@ -14,19 +14,29 @@ declare namespace IIIFComponents {
     }
 }
 
-
-interface IIIIFTreeComponent {
-    create: (options: IIIFComponents.ITreeComponentOptions) => IIIFComponents.TreeComponent;
+declare namespace IIIFComponents {
+    interface IBaseComponent {
+    }
 }
 
 declare namespace IIIFComponents {
-    interface ITreeComponentOptions {
+    interface IBaseComponentOptions {
         element?: string;
     }
 }
 
 declare namespace IIIFComponents {
-    class TreeComponent extends BaseComponent {
+    interface ITreeComponent extends IBaseComponent {
+    }
+}
+
+declare namespace IIIFComponents {
+    interface ITreeComponentOptions extends IBaseComponentOptions {
+    }
+}
+
+declare namespace IIIFComponents {
+    class TreeComponent extends BaseComponent implements ITreeComponent {
         options: ITreeComponentOptions;
         private _$element;
         private _$tree;
