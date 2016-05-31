@@ -11,7 +11,7 @@ namespace IIIFComponents {
         }
 
         public test(): void {
-            this.emitEvent(Events.TEST, [1, 2, 'three']);
+            this.emitEvent(TreeComponent.Events.TEST, [1, 2, 'three']);
         }
 
         protected _init(): boolean {
@@ -34,6 +34,12 @@ namespace IIIFComponents {
         protected _resize(): void {
             
         }
+    }
+}
+
+namespace IIIFComponents.TreeComponent {
+    export class Events {
+        static TEST: string = 'test';
     }
 }
 

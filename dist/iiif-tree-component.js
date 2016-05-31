@@ -2,17 +2,6 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.iiifTreeComponent = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 
-var IIIFComponents;
-(function (IIIFComponents) {
-    var Events = (function () {
-        function Events() {
-        }
-        Events.TEST = 'test';
-        return Events;
-    }());
-    IIIFComponents.Events = Events;
-})(IIIFComponents || (IIIFComponents = {}));
-
 
 
 
@@ -32,7 +21,7 @@ var IIIFComponents;
             this._resize();
         }
         TreeComponent.prototype.test = function () {
-            this.emitEvent(IIIFComponents.Events.TEST, [1, 2, 'three']);
+            this.emitEvent(TreeComponent.Events.TEST, [1, 2, 'three']);
         };
         TreeComponent.prototype._init = function () {
             var success = _super.prototype._init.call(this);
@@ -50,6 +39,19 @@ var IIIFComponents;
         return TreeComponent;
     }(Components.BaseComponent));
     IIIFComponents.TreeComponent = TreeComponent;
+})(IIIFComponents || (IIIFComponents = {}));
+var IIIFComponents;
+(function (IIIFComponents) {
+    var TreeComponent;
+    (function (TreeComponent) {
+        var Events = (function () {
+            function Events() {
+            }
+            Events.TEST = 'test';
+            return Events;
+        }());
+        TreeComponent.Events = Events;
+    })(TreeComponent = IIIFComponents.TreeComponent || (IIIFComponents.TreeComponent = {}));
 })(IIIFComponents || (IIIFComponents = {}));
 (function (w) {
     if (!w.IIIFComponents) {
