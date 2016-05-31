@@ -37,7 +37,7 @@ namespace IIIFComponents {
     }
 }
 
-module.exports = (function(w) {
+(function(w) {
     if (!w.IIIFComponents){
         w.IIIFComponents = IIIFComponents;
     } else {

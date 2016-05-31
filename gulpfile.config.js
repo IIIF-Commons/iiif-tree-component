@@ -5,14 +5,14 @@ var GulpConfig = (function () {
         this.name = metadata.name;
         // libs that must be included in a consuming app for this component to work
         this.deps = [
-            'node_modules/base-component/dist/base-component.min.js',
-            'node_modules/base-component/node_modules/eventemitter2/lib/eventemitter2.js'
+            'node_modules/base-component/dist/base-component.min.js'
         ];
         // libs used for testing purposes, but not needed in a consuming app
         this.testDeps = [
             'node_modules/manifesto.js/dist/client/manifesto.js'
         ];
         this.testDepsDir = './test/js';
+        // ts definitions to copy to the typings dir
         this.typings = [
             'node_modules/base-component/dist/base-component.d.ts'
         ];

@@ -36,12 +36,10 @@ var IIIFComponents;
         };
         TreeComponent.prototype._init = function () {
             var success = _super.prototype._init.call(this);
-            if (success) {
-                this._$element.append("I am a tree component");
-            }
-            else {
+            if (!success) {
                 console.error("TreeComponent failed to initialise");
             }
+            this._$element.append("I am a tree component");
             return success;
         };
         TreeComponent.prototype._getDefaultOptions = function () {
@@ -53,7 +51,7 @@ var IIIFComponents;
     }(Components.BaseComponent));
     IIIFComponents.TreeComponent = TreeComponent;
 })(IIIFComponents || (IIIFComponents = {}));
-module.exports = (function (w) {
+(function (w) {
     if (!w.IIIFComponents) {
         w.IIIFComponents = IIIFComponents;
     }
