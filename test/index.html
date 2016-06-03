@@ -5,30 +5,77 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/iiif-tree-component.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsviews/0.9.76/jsviews.min.js"></script>
+    <script src="js/ex.es3.min.js"></script>
+    <script src="js/extensions.min.js"></script>
+    <script src="js/utils.min.js"></script>
     <script src="js/base-component.min.js"></script>
     <script src="js/iiif-tree-component.js"></script>
     <script src="js/manifesto.js"></script>
+    <script src="js/manifold.js"></script>
 </head>
 <body>
+    
+    <div>
+        <input id="multiselect" type="checkbox" /><label for="multiselect">Multi-select Enabled</label>
+    </div>
     
     <div id="tree"></div>
 
     <script>
 
-        var component;
+        var component, multiSelectState;
         
         $(function() {
-
-            component = new IIIFComponents.TreeComponent({
-                element: "#tree"
+            
+            // http://wellcomelibrary.org/iiif/b18035723/manifest (Wunder der Vererbung)
+            // http://wellcomelibrary.org/iiif/collection/b19974760 (Chemist and Druggist)
+            
+            Manifesto.loadManifest('http://wellcomelibrary.org/iiif/b18035723/manifest').then(function(manifest){  
+                var m = Manifesto.create(manifest);
+                var helper = new Manifold.ManifestHelper({
+                    manifest: m,
+                    licenseMap: {},
+                    sequenceIndex: 0,
+                    canvasIndex: 0
+                });
+                
+                var rootNode = helper.getTree();                
+                multiSelectState = new Manifold.MultiSelectState();
+                multiSelectState.ranges = helper.getRanges();
+                multiSelectState.canvases = helper.getCurrentSequence().getCanvases();
+                
+                component = new IIIFComponents.TreeComponent({
+                    element: "#tree",
+                    rootNode,
+                    multiSelectState
+                });
+                
+                component.on('treeNodeSelected', function(args) {
+                    var node = args[0].treeNode || args[0].treeRoot;
+                    console.log('selected: ' + node.text);
+                });
+                
+                component.on('treeNodeMultiSelected', function(args) {
+                    var node = args[0];
+                    console.log('multi-selected: ' + node.text);
+                });
+                
+                component.on('multiSelectStateChange', function(args) {
+                    multiSelectState = args[0];
+                    console.log(multiSelectState);
+                });
             });
             
-            component.on('test', function(args) {
-                alert(args);
+            $('#multiselect').on('click', function() {
+                var $this = $(this);
+                if ($this.is(':checked')) {
+                    multiSelectState.enabled = true;
+                } else {
+                    multiSelectState.enabled = false;
+                }
+                component.updateMultiSelectState(multiSelectState);
             });
-            
-            component.test();
-            
         });
     </script>
 </body>
