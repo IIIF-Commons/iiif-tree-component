@@ -17,10 +17,13 @@
 <body>
     
     <div>
-        <input id="multiselect" type="checkbox" /><label for="multiselect">Multi-select Enabled</label>
+        <input id="multiselect" type="checkbox" /><label for="multiselect">Multi-select</label>&nbsp;
+        <input id="selectAll" type="checkbox" /><label for="selectAll">Select All</label>&nbsp;
     </div>
     
-    <div id="tree"></div>
+    <div id="tree">
+        loading...
+    </div>
 
     <script>
 
@@ -30,21 +33,19 @@
             
             // http://wellcomelibrary.org/iiif/b18035723/manifest (Wunder der Vererbung)
             // http://wellcomelibrary.org/iiif/collection/b19974760 (Chemist and Druggist)
-            
-            Manifesto.loadManifest('http://wellcomelibrary.org/iiif/b18035723/manifest').then(function(manifest){  
-                var m = Manifesto.create(manifest);
-                var helper = new Manifold.ManifestHelper({
-                    manifest: m,
-                    licenseMap: {},
-                    sequenceIndex: 0,
-                    canvasIndex: 0
-                });
+
+            Manifold.loadManifest({
+                iiifResourceUri: 'http://wellcomelibrary.org/iiif/collection/b19974760',
+                licenseMap: {},
+                collectionIndex: 0,
+                manifestIndex: 0,
+                sequenceIndex: 0,
+                canvasIndex: 0
+            }).then(function(helper){
                 
                 var rootNode = helper.getTree();                
-                multiSelectState = new Manifold.MultiSelectState();
-                multiSelectState.ranges = helper.getRanges();
-                multiSelectState.canvases = helper.getCurrentSequence().getCanvases();
-                
+                multiSelectState = helper.getMultiSelectState();
+
                 component = new IIIFComponents.TreeComponent({
                     element: "#tree",
                     rootNode,
@@ -52,30 +53,60 @@
                 });
                 
                 component.on('treeNodeSelected', function(args) {
-                    var node = args[0].treeNode || args[0].treeRoot;
+                    var node = args[0].data.treeNode || args[0].data.treeRoot;
+
                     console.log('selected: ' + node.text);
                 });
                 
                 component.on('treeNodeMultiSelected', function(args) {
-                    var node = args[0];
-                    console.log('multi-selected: ' + node.text);
+                    var range = args[0].data;
+                    
+                    multiSelectState.selectRange(range, range.treeNode.multiSelected);
+                    
+                    console.log('multi-selected: ' + range.treeNode.text);
+                    
+                    multiSelectStateChanged();
                 });
                 
-                component.on('multiSelectStateChange', function(args) {
-                    multiSelectState = args[0];
-                    console.log(multiSelectState);
-                });
+            }).catch(function() {
+                console.error('failed to load manifest');
             });
             
+            function multiSelectStateChanged() {
+
+                $('#selectAll').prop('checked', multiSelectState.allRangesSelected());                
+                $('#multiselect').prop('checked', multiSelectState.enabled);
+
+                component.updateMultiSelectState(multiSelectState);
+                
+                console.log(multiSelectState);
+            }
+
             $('#multiselect').on('click', function() {
                 var $this = $(this);
+                
                 if ($this.is(':checked')) {
-                    multiSelectState.enabled = true;
+                    multiSelectState.setEnabled(true);
                 } else {
-                    multiSelectState.enabled = false;
+                    multiSelectState.setEnabled(false);
                 }
-                component.updateMultiSelectState(multiSelectState);
+                
+                multiSelectStateChanged();
             });
+            
+            $('#selectAll').on('click', function() {
+                var $this = $(this);
+                
+                if ($this.is(':checked')) {
+                    multiSelectState.selectAll(true);
+                } else {
+                    multiSelectState.selectAll(false);
+                }
+                
+                multiSelectStateChanged();
+            });
+            
+            
         });
     </script>
 </body>

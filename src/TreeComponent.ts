@@ -1,21 +1,17 @@
 namespace IIIFComponents {
     export class TreeComponent extends Components.BaseComponent implements ITreeComponent {
 
-        private _$tree: JQuery;
         public options: ITreeComponentOptions;
-        allNodes: Manifold.ITreeNode[];
-        multiSelectableNodes: Manifold.ITreeNode[];
-        elideCount: number;
-        isOpen: boolean = false;
-        selectedNode: Manifold.ITreeNode;
-        multiSelectState: Manifold.MultiSelectState;
-
-        public rootNode: Manifold.ITreeNode;
+        private _$tree: JQuery;
+        private _allNodes: Manifold.ITreeNode[]; // cache
+        private _multiSelectableNodes: Manifold.ITreeNode[]; // cache
+        private _selectedNode: Manifold.ITreeNode;
+        private _multiSelectState: Manifold.MultiSelectState;
+        private _rootNode: Manifold.ITreeNode;
 
         constructor(options: ITreeComponentOptions) {
             super(options);
             this._init();
-            this._reset();
         }
 
         protected _init(): boolean {
@@ -27,8 +23,8 @@ namespace IIIFComponents {
             
             var that = this;
             
-            this.rootNode = this.options.rootNode;
-            this.multiSelectState = this.options.multiSelectState;
+            this._rootNode = this.options.rootNode;
+            this._multiSelectState = this.options.multiSelectState;
             
             this._$tree = $('<ul class="tree"></ul>');
             this._$element.append(this._$tree);
@@ -43,13 +39,13 @@ namespace IIIFComponents {
                                 {{else}}\
                                 <div class="spacer"></div>\
                                 {{/if}}\
-                                {^{if multiSelectionEnabled}}\
-                                        <input id="tree-checkbox-{{>id}}" type="checkbox" data-link="checked{:multiSelected ? \'checked\' : \'\'}" class="multiSelect" />\
+                                {^{if multiSelectEnabled}}\
+                                    <input id="tree-checkbox-{{>id}}" type="checkbox" data-link="checked{:multiSelected ? \'checked\' : \'\'}" class="multiSelect" />\
                                 {{/if}}\
                                 {^{if selected}}\
-                                    <a id="tree-link-{{>id}}" href="#" title="{{>label}}" class="selected" data-link="~elide(text)"></a>\
+                                    <a id="tree-link-{{>id}}" href="#" title="{{>label}}" class="selected">{{>text}}</a>\
                                 {{else}}\
-                                    <a id="tree-link-{{>id}}" href="#" title="{{>label}}" data-link="~elide(text)"></a>\
+                                    <a id="tree-link-{{>id}}" href="#" title="{{>label}}">{{>text}}</a>\
                                 {{/if}}\
                             </li>\
                             {^{if expanded}}\
@@ -63,27 +59,18 @@ namespace IIIFComponents {
                             {{/if}}'
             });
 
-            $.views.helpers({
-                elide: function(text){
-                    var $a = $((<any>this).linkCtx.elem);
-                    var elideCount = Math.floor($a.parent().width() / 7); // todo: remove / 7
-                    return Utils.Strings.htmlDecode(Utils.Strings.ellipsis(text, elideCount));
-                    //https://github.com/BorisMoore/jsviews/issues/296
-                }
-            });
-
             $.views.tags({
                 tree: {
                     toggleExpanded: function() {
                         that._setNodeExpanded(this.data, !this.data.expanded);
                     },
                     toggleMultiSelect: function() {
-                        that._multiSelectTreeNode(this.data, !this.data.multiSelected);
-                        that._updateParentNodes(this.data);
+                        that._setNodeMultiSelected(this.data, !!!this.data.multiSelected);
+                        that._emit(TreeComponent.Events.TREE_NODE_MULTISELECTED, this.data);
                     },
                     init: function (tagCtx, linkCtx, ctx) {
                         var data = tagCtx.view.data;
-                        data.text = data.label;//Utils.Strings.htmlDecode(Utils.Strings.ellipsis(data.label, that.elideCount));
+                        data.text = data.label;
                         this.data = tagCtx.view.data;
                     },
                     onAfterLink: function () {
@@ -94,12 +81,13 @@ namespace IIIFComponents {
                                 self.toggleExpanded();
                             }).on('click', 'a', function(e) {
                                 e.preventDefault();
+                                
                                 if (self.data.nodes.length) self.toggleExpanded();
 
-                                if (that.multiSelectState.enabled){
+                                if (self.data.multiSelectEnabled){
                                     self.toggleMultiSelect();
                                 } else {
-                                    that._emit(TreeComponent.Events.TREE_NODE_SELECTED, self.data.data);
+                                    that._emit(TreeComponent.Events.TREE_NODE_SELECTED, self.data);
                                 }
                             }).on('click', 'input.multiSelect', function(e) {
                                 self.toggleMultiSelect();
@@ -108,7 +96,9 @@ namespace IIIFComponents {
                     template: $.templates.treeTemplate
                 }
             });
-
+            
+            this._$tree.link($.templates.pageTemplate, this._rootNode);
+            
             return success;
         }
         
@@ -118,25 +108,16 @@ namespace IIIFComponents {
         }
 
         public updateMultiSelectState(state: Manifold.MultiSelectState): void {
-            this.multiSelectState = state;
 
-            for (var i = 0; i < this.multiSelectState.ranges.length; i++) {
-                var range: Manifold.IRange = this.multiSelectState.ranges[i];
+            this._multiSelectState = state;
+
+            for (var i = 0; i < this._multiSelectState.ranges.length; i++) {
+                var range: Manifold.IRange = this._multiSelectState.ranges[i];
                 var node: Manifold.ITreeNode = this._getMultiSelectableNodes().en().where(n => n.data.id === range.id).first();
+                this._setNodeMultiSelectEnabled(node, (<Manifold.IMultiSelectable>range).multiSelectEnabled);
                 this._setNodeMultiSelected(node, range.multiSelected);
+                this._updateParentNodes(node);
             }
-            
-            
-            
-            this._reset();
-        }
-
-        private _reset(): void {
-            this.allNodes = null;
-            this.multiSelectableNodes = null;
-            this._setMultiSelectionEnabled(this.multiSelectState.enabled);
-            this._$tree.link($.templates.pageTemplate, this.rootNode);
-            this._resize();
         }
 
         public allNodesSelected(): boolean {
@@ -149,11 +130,11 @@ namespace IIIFComponents {
         private _getMultiSelectableNodes(): Manifold.ITreeNode[] {
 
             // if cached
-            if (this.multiSelectableNodes){
-                return this.multiSelectableNodes;
+            if (this._multiSelectableNodes){
+                return this._multiSelectableNodes;
             }
 
-            return this.multiSelectableNodes = this._getAllNodes().en().where((n) => this._nodeIsMultiSelectable(n)).toArray();
+            return this._multiSelectableNodes = this._getAllNodes().en().where((n) => this._nodeIsMultiSelectable(n)).toArray();
         }
 
         private _nodeIsMultiSelectable(node: Manifold.ITreeNode): boolean {
@@ -163,11 +144,11 @@ namespace IIIFComponents {
         private _getAllNodes(): Manifold.ITreeNode[] {
 
             // if cached
-            if (this.allNodes){
-                return this.allNodes;
+            if (this._allNodes){
+                return this._allNodes;
             }
-
-            return this.allNodes = <Manifold.ITreeNode[]>this.rootNode.nodes.en().traverseUnique(node => node.nodes).toArray();
+            
+            return this._allNodes = <Manifold.ITreeNode[]>this._rootNode.nodes.en().traverseUnique(node => node.nodes).toArray();
         }
 
         public getMultiSelectedNodes(): Manifold.ITreeNode[] {
@@ -182,10 +163,7 @@ namespace IIIFComponents {
             if (!this._nodeIsMultiSelectable(node)) return;
 
             this._setNodeMultiSelected(node, isSelected);
-            
-            this._emit(TreeComponent.Events.TREE_NODE_MULTISELECTED, node);
-            this._emit(TreeComponent.Events.MULTISELECT_STATE_CHANGE, this.multiSelectState);
-            
+
             // recursively select/deselect child nodes
             for (var i = 0; i < node.nodes.length; i++){
                 var n: Manifold.ITreeNode = <Manifold.ITreeNode>node.nodes[i];
@@ -239,6 +217,10 @@ namespace IIIFComponents {
                 this._setNodeIndeterminate(node, false);
             }
         }
+        
+        private _setNodeMultiSelectEnabled(node: Manifold.ITreeNode, enabled: boolean): void {
+            $.observable(node).setProperty("multiSelectEnabled", enabled);
+        }
 
         private _setNodeIndeterminate(node: Manifold.ITreeNode, indeterminate: boolean): void {
             var $checkbox: JQuery = this._getNodeCheckbox(node);
@@ -259,44 +241,32 @@ namespace IIIFComponents {
             return siblings;
         }
 
-        private _setMultiSelectionEnabled(enabled: boolean): void {
-            var nodes: Manifold.ITreeNode[] = this._getAllNodes();
-
-            for (var i = 0; i < nodes.length; i++){
-                var node: Manifold.ITreeNode = nodes[i];
-
-                if (this._nodeIsMultiSelectable(node)){
-                    node.multiSelectionEnabled = enabled;
-                }
-            }
-        }
-
         public selectPath(path: string): void {
-            if (!this.rootNode) return;
+            if (!this._rootNode) return;
 
             var pathArr = path.split("/");
             if (pathArr.length >= 1) pathArr.shift();
-            var node = this.getNodeByPath(this.rootNode, pathArr);
+            var node = this.getNodeByPath(this._rootNode, pathArr);
 
             this.selectNode(node);
         }
 
-        deselectCurrentNode(): void {
-            if (this.selectedNode) this._setNodeSelected(this.selectedNode, false);
+        public deselectCurrentNode(): void {
+            if (this._selectedNode) this._setNodeSelected(this._selectedNode, false);
         }
 
-        selectNode(node: any): void{
-            if (!this.rootNode) return;
+        public selectNode(node: any): void{
+            if (!this._rootNode) return;
 
             this.deselectCurrentNode();
-            this.selectedNode = node;
-            this._setNodeSelected(this.selectedNode, true);
+            this._selectedNode = node;
+            this._setNodeSelected(this._selectedNode, true);
 
-            this._updateParentNodes(this.selectedNode);
+            this._updateParentNodes(this._selectedNode);
         }
 
         // walks down the tree using the specified path e.g. [2,2,0]
-        getNodeByPath(parentNode: Manifold.ITreeNode, path: string[]): Manifold.ITreeNode {
+        public getNodeByPath(parentNode: Manifold.ITreeNode, path: string[]): Manifold.ITreeNode {
             if (path.length === 0) return parentNode;
             var index = path.shift();
             var node = parentNode.nodes[index];
@@ -304,42 +274,21 @@ namespace IIIFComponents {
         }
 
         public show(): void {
-            this.isOpen = true;
             this._$element.show();
         }
 
         public hide(): void {
-            this.isOpen = false;
-            this._$element.hide();
-        }
-
-        private elide($a: JQuery): void {
-            if (!$a.is(':visible')) return;
-            var elideCount = Math.floor($a.parent().width() / 7); // todo: remove / 7!
-            $a.text(Utils.Strings.htmlDecode(Utils.Strings.ellipsis($a.attr('title'), elideCount)));
-        }
-
-        private elideAll(): void {
-            var that = this;
-
-            this._$tree.find('a').each(function() {
-                var $this = $(this);
-                that.elide($this);
-            });
+             this._$element.hide();
         }
         
         protected _resize(): void {
-            // elide links
-            if (this._$tree){
-                this.elideAll();
-            }
+
         }
     }
 }
 
 namespace IIIFComponents.TreeComponent {
     export class Events {
-        static MULTISELECT_STATE_CHANGE: string = 'multiSelectStateChange';
         static TREE_NODE_MULTISELECTED: string = 'treeNodeMultiSelected';
         static TREE_NODE_SELECTED: string = 'treeNodeSelected';
     }

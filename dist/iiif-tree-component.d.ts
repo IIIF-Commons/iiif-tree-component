@@ -27,20 +27,17 @@ declare namespace IIIFComponents {
 
 declare namespace IIIFComponents {
     class TreeComponent extends Components.BaseComponent implements ITreeComponent {
-        private _$tree;
         options: ITreeComponentOptions;
-        allNodes: Manifold.ITreeNode[];
-        multiSelectableNodes: Manifold.ITreeNode[];
-        elideCount: number;
-        isOpen: boolean;
-        selectedNode: Manifold.ITreeNode;
-        multiSelectState: Manifold.MultiSelectState;
-        rootNode: Manifold.ITreeNode;
+        private _$tree;
+        private _allNodes;
+        private _multiSelectableNodes;
+        private _selectedNode;
+        private _multiSelectState;
+        private _rootNode;
         constructor(options: ITreeComponentOptions);
         protected _init(): boolean;
         protected _getDefaultOptions(): ITreeComponentOptions;
         updateMultiSelectState(state: Manifold.MultiSelectState): void;
-        private _reset();
         allNodesSelected(): boolean;
         private _getMultiSelectableNodes();
         private _nodeIsMultiSelectable(node);
@@ -53,24 +50,21 @@ declare namespace IIIFComponents {
         private _setNodeSelected(node, selected);
         private _setNodeExpanded(node, expanded);
         private _setNodeMultiSelected(node, selected);
+        private _setNodeMultiSelectEnabled(node, enabled);
         private _setNodeIndeterminate(node, indeterminate);
         private _getNodeCheckbox(node);
         private _getNodeSiblings(node);
-        private _setMultiSelectionEnabled(enabled);
         selectPath(path: string): void;
         deselectCurrentNode(): void;
         selectNode(node: any): void;
         getNodeByPath(parentNode: Manifold.ITreeNode, path: string[]): Manifold.ITreeNode;
         show(): void;
         hide(): void;
-        private elide($a);
-        private elideAll();
         protected _resize(): void;
     }
 }
 declare namespace IIIFComponents.TreeComponent {
     class Events {
-        static MULTISELECT_STATE_CHANGE: string;
         static TREE_NODE_MULTISELECTED: string;
         static TREE_NODE_SELECTED: string;
     }

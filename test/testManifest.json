@@ -1,0 +1,115 @@
+
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://wellcomelibrary.org/iiif/b18035723/manifest",
+  "@type": "sc:Manifest",
+  "label": "Wunder der Vererbung",
+  "sequences": [
+    {
+      "@id": "http://wellcomelibrary.org/iiif/b18035723/sequence/s0",
+      "@type": "sc:Sequence",
+      "label": "Sequence s0",
+      "viewingHint": "paged",
+      "canvases": [
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b18035723/canvas/c0",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b18035723/0/ff2085d5-a9c7-412e-9dbe-dda87712228d.jpg",
+          "height": 3543,
+          "width": 2569,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b18035723/imageanno/ff2085d5-a9c7-412e-9dbe-dda87712228d",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b18035723-0/ff2085d5-a9c7-412e-9dbe-dda87712228d/full/!1024,1024/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "height": 1024,
+                "width": 742,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b18035723-0/ff2085d5-a9c7-412e-9dbe-dda87712228d",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b18035723/canvas/c0"
+            }
+          ],
+          "otherContent": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b18035723/contentAsText/0",
+              "@type": "sc:AnnotationList",
+              "label": "Text of this page"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b18035723/canvas/c1",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b18035723/0/67907d59-3167-41bf-a425-cf5369a84575.jpg",
+          "height": 3040,
+          "width": 2231,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b18035723/imageanno/67907d59-3167-41bf-a425-cf5369a84575",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b18035723-0/67907d59-3167-41bf-a425-cf5369a84575/full/!1024,1024/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "height": 1024,
+                "width": 751,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b18035723-0/67907d59-3167-41bf-a425-cf5369a84575",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b18035723/canvas/c1"
+            }
+          ],
+          "otherContent": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b18035723/contentAsText/1",
+              "@type": "sc:AnnotationList",
+              "label": "Text of this page"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "structures": [
+    {
+      "@id":"http://wellcomelibrary.org/iiif/b18035723/range/r-0",
+      "@type":"sc:Range",
+      "label":"Chapter 1",
+      "viewingHint":"top",
+      "ranges" : [
+          "http://wellcomelibrary.org/iiif/b18035723/range/r-1",
+          "http://wellcomelibrary.org/iiif/b18035723/range/r-2"
+      ]
+    },
+    {
+      "@id": "http://wellcomelibrary.org/iiif/b18035723/range/r-1",
+      "@type": "sc:Range",
+      "label": "Front Cover",
+      "canvases": [
+        "http://wellcomelibrary.org/iiif/b18035723/canvas/c0"
+      ]
+    },
+    {
+      "@id": "http://wellcomelibrary.org/iiif/b18035723/range/r-2",
+      "@type": "sc:Range",
+      "label": "Back Cover",
+      "canvases": [
+        "http://wellcomelibrary.org/iiif/b18035723/canvas/c1"
+      ]
+    }
+  ]
+}
