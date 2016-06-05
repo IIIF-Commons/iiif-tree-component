@@ -1,17 +1,4 @@
 // iiif-tree-component v1.0.1 https://github.com/edsilv/iiif-tree-component#readme
-interface JQuery {
-    // jsviews
-    link: any;
-    render: any;
-}
-
-interface JQueryStatic {
-    // jsviews
-    observable: any;
-    templates: any;
-    views: any;
-    view: any;
-}
 
 declare namespace IIIFComponents {
     interface ITreeComponent extends Components.IBaseComponent {

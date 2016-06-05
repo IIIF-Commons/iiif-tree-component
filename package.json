@@ -19,8 +19,6 @@
   "devDependencies": {
     "base-component": "git://github.com/edsilv/base-component.git",
     "del": "^2.2.0",
-    "exjs": "git://github.com/BSick7/exjs.git",
-    "extensions": "git://github.com/edsilv/extensions.git",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.1.0",
     "gulp-concat": "^2.6.0",
@@ -28,7 +26,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-typescript": "^2.13.4",
     "gulp-utils": "git://github.com/edsilv/gulp-utils.git",
-    "manifesto": "git://github.com/universalviewer/manifesto.git#dev",
     "manifold": "git://github.com/universalviewer/manifold.git",
     "merge2": "^1.0.2",
     "path": "^0.12.7",
