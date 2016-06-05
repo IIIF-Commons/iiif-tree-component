@@ -6,6 +6,8 @@ http://edsilv.github.io/iiif-tree-component/test/
 
     npm install
     
+    gulp sync
+    
     gulp
     
     gulp test
