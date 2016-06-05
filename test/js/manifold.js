@@ -263,21 +263,6 @@ var Manifold;
         Helper.prototype.getSequenceByIndex = function (index) {
             return this.manifest.getSequenceByIndex(index);
         };
-        // returns a list of treenodes for each decade.
-        // expanding a decade generates a list of years
-        // expanding a year gives a list of months containing issues
-        // expanding a month gives a list of issues.
-        Helper.prototype.getSortedTree = function (sortType) {
-            var tree = this.iiifResource.getTree();
-            var sortedTree = manifesto.getTreeNode();
-            if (sortType === Manifold.TreeSortType.date) {
-                this.getSortedTreeNodesByDate(sortedTree, tree);
-            }
-            else if (sortType === Manifold.TreeSortType.none) {
-                sortedTree = tree;
-            }
-            return sortedTree;
-        };
         Helper.prototype.getSortedTreeNodesByDate = function (sortedTree, tree) {
             var all = tree.nodes.en().traverseUnique(function (node) { return node.nodes; })
                 .where(function (n) { return n.data.type === manifesto.TreeNodeType.collection().toString() ||
@@ -304,8 +289,27 @@ var Manifold;
         Helper.prototype.getTotalCanvases = function () {
             return this.getCurrentSequence().getTotalCanvases();
         };
-        Helper.prototype.getTree = function () {
-            return this.iiifResource.getTree();
+        Helper.prototype.getTree = function (sortType) {
+            var tree = this.iiifResource.getTree();
+            var sortedTree = manifesto.getTreeNode();
+            switch (sortType) {
+                case Manifold.TreeSortType.date:
+                    // returns a list of treenodes for each decade.
+                    // expanding a decade generates a list of years
+                    // expanding a year gives a list of months containing issues
+                    // expanding a month gives a list of issues.
+                    if (this._treeHasNavDates(tree)) {
+                        this.getSortedTreeNodesByDate(sortedTree, tree);
+                        break;
+                    }
+                default:
+                    sortedTree = tree;
+            }
+            return sortedTree;
+        };
+        Helper.prototype._treeHasNavDates = function (tree) {
+            var nodes = tree.nodes.en().traverseUnique(function (node) { return node.nodes; }).where(function (n) { return !isNaN(n.navDate); }).toArray();
+            return nodes.length > 0;
         };
         Helper.prototype.getViewingDirection = function () {
             var viewingDirection = this.getCurrentSequence().getViewingDirection();
@@ -623,6 +627,9 @@ var Manifold;
             var c = this.canvases.en().where(function (c) { return c.id === canvas.id; }).first();
             c.multiSelected = selected;
         };
+        MultiSelectState.prototype.selectAllCanvases = function (selected) {
+            this.selectCanvases(this.canvases, selected);
+        };
         MultiSelectState.prototype.selectCanvases = function (canvases, selected) {
             for (var j = 0; j < canvases.length; j++) {
                 var canvas = canvases[j];
@@ -634,6 +641,9 @@ var Manifold;
             r.multiSelected = selected;
             var canvases = this.getRangeCanvases(r);
             this.selectCanvases(canvases, selected);
+        };
+        MultiSelectState.prototype.selectAllRanges = function (selected) {
+            this.selectRanges(this.ranges, selected);
         };
         MultiSelectState.prototype.selectRanges = function (ranges, selected) {
             for (var i = 0; i < ranges.length; i++) {

@@ -25,8 +25,6 @@ var IIIFComponents;
                 console.error("TreeComponent failed to initialise");
             }
             var that = this;
-            this._rootNode = this.options.rootNode;
-            this._multiSelectState = this.options.multiSelectState;
             this._$tree = $('<ul class="tree"></ul>');
             this._$element.append(this._$tree);
             $.templates({
@@ -43,9 +41,9 @@ var IIIFComponents;
                                     <input id="tree-checkbox-{{>id}}" type="checkbox" data-link="checked{:multiSelected ? \'checked\' : \'\'}" class="multiSelect" />\
                                 {{/if}}\
                                 {^{if selected}}\
-                                    <a id="tree-link-{{>id}}" href="#" title="{{>label}}" class="selected">{{>text}}</a>\
+                                    <a id="tree-link-{{>id}}" href="#" title="{{>label}}" class="selected">{{>label}}</a>\
                                 {{else}}\
-                                    <a id="tree-link-{{>id}}" href="#" title="{{>label}}">{{>text}}</a>\
+                                    <a id="tree-link-{{>id}}" href="#" title="{{>label}}">{{>label}}</a>\
                                 {{/if}}\
                             </li>\
                             {^{if expanded}}\
@@ -68,9 +66,8 @@ var IIIFComponents;
                         that._emit(TreeComponent.Events.TREE_NODE_MULTISELECTED, this.data);
                     },
                     init: function (tagCtx, linkCtx, ctx) {
-                        var data = tagCtx.view.data;
-                        data.text = data.label;
                         this.data = tagCtx.view.data;
+                        //this.data.text = this.data.label;
                     },
                     onAfterLink: function () {
                         var self = this;
@@ -94,8 +91,13 @@ var IIIFComponents;
                     template: $.templates.treeTemplate
                 }
             });
-            this._$tree.link($.templates.pageTemplate, this._rootNode);
             return success;
+        };
+        TreeComponent.prototype.databind = function (rootNode) {
+            this._rootNode = rootNode;
+            this._allNodes = null; // delete cache
+            this._multiSelectableNodes = null; // delete cache
+            this._$tree.link($.templates.pageTemplate, this._rootNode);
         };
         TreeComponent.prototype._getDefaultOptions = function () {
             return {};
@@ -105,9 +107,10 @@ var IIIFComponents;
             for (var i = 0; i < this._multiSelectState.ranges.length; i++) {
                 var range = this._multiSelectState.ranges[i];
                 var node = this._getMultiSelectableNodes().en().where(function (n) { return n.data.id === range.id; }).first();
-                this._setNodeMultiSelectEnabled(node, range.multiSelectEnabled);
-                this._setNodeMultiSelected(node, range.multiSelected);
-                this._updateParentNodes(node);
+                if (node) {
+                    this._setNodeMultiSelectEnabled(node, range.multiSelectEnabled);
+                    this._setNodeMultiSelected(node, range.multiSelected);
+                }
             }
         };
         TreeComponent.prototype.allNodesSelected = function () {
@@ -150,23 +153,22 @@ var IIIFComponents;
                 this._multiSelectTreeNode(n, isSelected);
             }
         };
-        TreeComponent.prototype._updateParentNodes = function (node) {
-            var parentNode = node.parentNode;
-            if (!parentNode)
-                return;
-            // expand parents if selected
-            if (node.selected) {
-                this._expandParents(node);
-            }
-            // get the number of selected children.
-            var checkedCount = parentNode.nodes.en().where(function (n) { return n.multiSelected; }).count();
-            // if any are checked, check the parent.
-            this._setNodeMultiSelected(parentNode, checkedCount > 0);
-            var indeterminate = checkedCount > 0 && checkedCount < parentNode.nodes.length;
-            this._setNodeIndeterminate(parentNode, indeterminate);
-            // cascade up tree
-            this._updateParentNodes(parentNode);
-        };
+        // private _updateParentNodes(node: Manifold.ITreeNode): void {
+        //     var parentNode: Manifold.ITreeNode = <Manifold.ITreeNode>node.parentNode;
+        //     if (!parentNode) return;
+        //     // expand parents if selected
+        //     if (node.selected) {
+        //         this._expandParents(node);
+        //     }
+        //     // get the number of selected children.
+        //     var checkedCount: number = parentNode.nodes.en().where(n => (<Manifold.ITreeNode>n).multiSelected).count();
+        //     // if any are checked, check the parent.
+        //     this._setNodeMultiSelected(parentNode, checkedCount > 0);
+        //     var indeterminate: boolean = checkedCount > 0 && checkedCount < parentNode.nodes.length;
+        //     this._setNodeIndeterminate(parentNode, indeterminate);
+        //     // cascade up tree
+        //     this._updateParentNodes(parentNode);
+        // }
         TreeComponent.prototype._expandParents = function (node) {
             if (!node.parentNode)
                 return;
@@ -181,27 +183,27 @@ var IIIFComponents;
         };
         TreeComponent.prototype._setNodeMultiSelected = function (node, selected) {
             $.observable(node).setProperty("multiSelected", selected);
-            if (!selected) {
-                this._setNodeIndeterminate(node, false);
-            }
+            // if (!selected){
+            //     this._setNodeIndeterminate(node, false);
+            // }
         };
         TreeComponent.prototype._setNodeMultiSelectEnabled = function (node, enabled) {
             $.observable(node).setProperty("multiSelectEnabled", enabled);
         };
-        TreeComponent.prototype._setNodeIndeterminate = function (node, indeterminate) {
-            var $checkbox = this._getNodeCheckbox(node);
-            $checkbox.prop("indeterminate", indeterminate);
-        };
-        TreeComponent.prototype._getNodeCheckbox = function (node) {
-            return $("#tree-checkbox-" + node.id);
-        };
-        TreeComponent.prototype._getNodeSiblings = function (node) {
-            var siblings = [];
-            if (node.parentNode) {
-                siblings = node.parentNode.nodes.en().where(function (n) { return n !== node; }).toArray();
-            }
-            return siblings;
-        };
+        // private _setNodeIndeterminate(node: Manifold.ITreeNode, indeterminate: boolean): void {
+        //     var $checkbox: JQuery = this._getNodeCheckbox(node);
+        //     $checkbox.prop("indeterminate", indeterminate);
+        // }
+        // private _getNodeCheckbox(node: Manifold.ITreeNode): JQuery {
+        //     return $("#tree-checkbox-" + node.id);
+        // }
+        // private _getNodeSiblings(node: Manifold.ITreeNode): Manifold.ITreeNode[] {
+        //     var siblings: Manifold.ITreeNode[] = [];
+        //     if (node.parentNode){
+        //         siblings = <Manifold.ITreeNode[]>node.parentNode.nodes.en().where(n => n !== node).toArray();
+        //     }
+        //     return siblings;
+        // }
         TreeComponent.prototype.selectPath = function (path) {
             if (!this._rootNode)
                 return;
@@ -221,7 +223,8 @@ var IIIFComponents;
             this.deselectCurrentNode();
             this._selectedNode = node;
             this._setNodeSelected(this._selectedNode, true);
-            this._updateParentNodes(this._selectedNode);
+            // todo: rather than manipulating the tree directly, allow manifests to be multi-selectable in manifold
+            //this._updateParentNodes(this._selectedNode);
         };
         // walks down the tree using the specified path e.g. [2,2,0]
         TreeComponent.prototype.getNodeByPath = function (parentNode, path) {

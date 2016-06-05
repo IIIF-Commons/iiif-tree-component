@@ -51,12 +51,12 @@ declare namespace Manifold {
         getSearchWithinService(): Manifesto.IService;
         getSeeAlso(): any;
         getSequenceByIndex(index: number): Manifesto.ISequence;
-        getSortedTree(sortType: TreeSortType): ITreeNode;
         getSortedTreeNodesByDate(sortedTree: ITreeNode, tree: ITreeNode): void;
         getStartCanvasIndex(): number;
         getThumbs(width: number, height: number): Manifesto.IThumb[];
         getTotalCanvases(): number;
-        getTree(): Manifesto.ITreeNode;
+        getTree(sortType?: TreeSortType): ITreeNode;
+        private _treeHasNavDates(tree);
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): Manifesto.ViewingHint;
         hasParentCollection(): boolean;
@@ -142,9 +142,7 @@ declare namespace Manifold {
 }
 
 declare namespace Manifold {
-    interface ITreeNode extends Manifesto.ITreeNode {
-        multiSelectionEnabled: boolean;
-        multiSelected: boolean;
+    interface ITreeNode extends IMultiSelectable, Manifesto.ITreeNode {
     }
 }
 
@@ -168,8 +166,10 @@ declare namespace Manifold {
         getRangeCanvases(range: Manifesto.IRange): Manifesto.ICanvas[];
         selectAll(selected: boolean): void;
         selectCanvas(canvas: ICanvas, selected: boolean): void;
+        selectAllCanvases(selected: boolean): void;
         selectCanvases(canvases: ICanvas[], selected: boolean): void;
         selectRange(range: IRange, selected: boolean): void;
+        selectAllRanges(selected: boolean): void;
         selectRanges(ranges: IRange[], selected: boolean): void;
         setEnabled(enabled: boolean): void;
     }

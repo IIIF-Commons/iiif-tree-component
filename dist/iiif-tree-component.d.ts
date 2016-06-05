@@ -20,8 +20,6 @@ declare namespace IIIFComponents {
 
 declare namespace IIIFComponents {
     interface ITreeComponentOptions extends Components.IBaseComponentOptions {
-        rootNode: Manifold.ITreeNode;
-        multiSelectState: Manifold.MultiSelectState;
     }
 }
 
@@ -36,6 +34,7 @@ declare namespace IIIFComponents {
         private _rootNode;
         constructor(options: ITreeComponentOptions);
         protected _init(): boolean;
+        databind(rootNode: Manifold.ITreeNode): void;
         protected _getDefaultOptions(): ITreeComponentOptions;
         updateMultiSelectState(state: Manifold.MultiSelectState): void;
         allNodesSelected(): boolean;
@@ -45,15 +44,11 @@ declare namespace IIIFComponents {
         getMultiSelectedNodes(): Manifold.ITreeNode[];
         getNodeById(id: string): Manifold.ITreeNode;
         private _multiSelectTreeNode(node, isSelected);
-        private _updateParentNodes(node);
         private _expandParents(node);
         private _setNodeSelected(node, selected);
         private _setNodeExpanded(node, expanded);
         private _setNodeMultiSelected(node, selected);
         private _setNodeMultiSelectEnabled(node, enabled);
-        private _setNodeIndeterminate(node, indeterminate);
-        private _getNodeCheckbox(node);
-        private _getNodeSiblings(node);
         selectPath(path: string): void;
         deselectCurrentNode(): void;
         selectNode(node: any): void;
