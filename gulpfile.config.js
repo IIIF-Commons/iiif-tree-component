@@ -3,16 +3,12 @@ var metadata = require('./package');
 var GulpConfig = (function () {
     function GulpConfig() {
         this.name = metadata.name;
+        this.header = '// ' + this.name + ' v' + metadata.version + ' ' + metadata.homepage + '\n';
         // libs that MUST be included in a consuming app for this component to work
         this.deps = [
             'node_modules/base-component/dist/base-component.js',
             'node_modules/utils/dist/utils.min.js'
         ];
-        // libs that MAY be included in a consuming app but are used here for testing purposes
-        this.testDeps = [
-            'node_modules/manifold/dist/manifold.bundle.js'
-        ];
-        this.testDepsDir = './test/js';
         // ts definitions to copy to the typings dir
         this.typings = [
             'node_modules/base-component/dist/base-component.d.ts',
@@ -20,8 +16,13 @@ var GulpConfig = (function () {
             'node_modules/utils/dist/utils.d.ts'
         ];
         this.typingsDir = './typings';
+        // libs that MAY be included in a consuming app but are used here for example purposes
+        this.examplesDeps = [
+            'node_modules/manifold/dist/manifold.bundle.js'
+        ];
+        this.examplesDir = './examples';
+        this.examplesDepsDir = './examples/js';
         this.dist = './dist';
-        this.header = '// ' + this.name + ' v' + metadata.version + ' ' + metadata.homepage + '\n';
         this.jsOut = this.name + '.js';
         this.jsMinOut = this.name + '.min.js';
         this.jsBundleOut = this.name + '.bundle.js';

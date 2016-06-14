@@ -3,9 +3,9 @@ var config = new c();
 var gulp = require('gulp');
 var connect = require('gulp-connect');
 
-gulp.task('test', ['sync'], function() {
+gulp.task('examples', ['sync'], function() {
     connect.server({
-        root: './test',
+        root: config.examplesDir,
         middleware: function(connect, opt) {
             return [
                 //utils.mount(connect, config.dist) // serve contents of the dist folder

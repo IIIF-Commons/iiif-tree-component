@@ -2,7 +2,7 @@
 
 (Work in progress)
 
-http://edsilv.github.io/iiif-tree-component/test/
+http://edsilv.github.io/iiif-tree-component/examples/
 
     npm install
     
@@ -10,4 +10,4 @@ http://edsilv.github.io/iiif-tree-component/test/
     
     gulp
     
-    gulp test
+    gulp examples

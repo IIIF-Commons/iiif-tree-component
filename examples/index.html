@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>iiif-tree-component: test</title>
+    <title>iiif-tree-component: examples</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/iiif-tree-component.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
@@ -31,6 +31,7 @@
             // http://wellcomelibrary.org/iiif/collection/b19974760 (Chemist and Druggist)
             // http://wellcomelibrary.org/iiif/collection/b18031511 (Biological Basis of Medicine)
             // http://digital.library.villanova.edu/Collection/vudl:3/IIIF (Villanova Collection)
+            // http://dams.llgc.org.uk/iiif/newspapers/4651124.json (Abergele and Pensarn Visitor 1909-1910)
 
             Manifold.loadManifest({
                 iiifResourceUri: 'http://wellcomelibrary.org/iiif/collection/b19974760',
@@ -57,10 +58,12 @@
                     var range = node.data;
                     multiSelectState.selectRange(range, node.multiSelected);                    
                     console.log('multi-selected: ' + node.label);                    
-                    multiSelectStateChanged();
+                    updateMultiSelectState();
                 });
                 
-                databindTree(Manifold.TreeSortType.none);               
+                multiSelectState = helper.getMultiSelectState();
+
+                databindTree(Manifold.TreeSortType.none);
 
             }).catch(function() {
                 console.error('failed to load manifest');
@@ -69,12 +72,10 @@
             function databindTree(treeSortType) {
                 rootNode = helper.getTree(treeSortType);  
                 component.databind(rootNode);
-                
-                multiSelectState = helper.getMultiSelectState();                
-                multiSelectStateChanged(); 
+                updateMultiSelectState();
             }
             
-            function multiSelectStateChanged() {
+            function updateMultiSelectState() {
                 $('#selectAll').prop('checked', multiSelectState.allRangesSelected());                
                 $('#multiselect').prop('checked', multiSelectState.enabled);
                 component.updateMultiSelectState(multiSelectState);                
@@ -90,7 +91,7 @@
                     multiSelectState.setEnabled(false);
                 }
                 
-                multiSelectStateChanged();
+                updateMultiSelectState();
             });
             
             $('#selectAll').on('click', function() {
@@ -102,7 +103,7 @@
                     multiSelectState.selectAllRanges(false);
                 }
                 
-                multiSelectStateChanged();
+                updateMultiSelectState();
             });
             
             $('#sortByDate').on('click', function(e) {
