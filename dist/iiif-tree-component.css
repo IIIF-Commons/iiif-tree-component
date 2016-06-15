@@ -1,8 +1,9 @@
+body {
+  font-family: Sans-Serif;
+  padding: 20px;
+}
 .iiif-tree-component {
   overflow: auto;
-  color: #000;
-  font-weight: normal;
-  font-family: "sans-serif";
 }
 .iiif-tree-component .toggle {
   cursor: pointer;
@@ -55,5 +56,5 @@
   overflow: hidden;
 }
 .iiif-tree-component ul a.selected {
-  color: #14a4c3;
+  color: lightblue;
 }

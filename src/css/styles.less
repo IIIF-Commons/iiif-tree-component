@@ -1,20 +1,17 @@
-@text-color:                    #000;
-@margin-small-horizontal:       5px;
-@img-path:                      "../img/";
-@margin-large-horizontal:       15px;
-@brand-secondary:               #14a4c3;
-@font-family-base:              "sans-serif";
+@img-path: "../img/";
+
+body{
+    font-family: Sans-Serif;
+    padding: 20px;
+}
 
 .iiif-tree-component{
     overflow: auto;
-    color: @text-color;
-    font-weight: normal;
-    font-family: @font-family-base;
 
     .toggle {
         cursor: pointer;
         margin-top: 3px;
-        margin-right: @margin-small-horizontal;
+        margin-right: 5px;
         display: block;
         float: left;
         height: 10px;
@@ -32,7 +29,7 @@
 
     .spacer {
         margin-top: 3px;
-        margin-right: @margin-small-horizontal;
+        margin-right: 5px;
         display: block;
         float: left;
         height: 10px;
@@ -41,7 +38,7 @@
 
     input.multiSelect {
         margin-top: 0px;
-        margin-right: @margin-small-horizontal;
+        margin-right: 5px;
         display: block;
         float: left;
         height: 13px;
@@ -55,7 +52,7 @@
     }
 
     ul.tree ul {
-        margin-left: @margin-large-horizontal;
+        margin-left: 15px;
     }
 
     ul.tree li {
@@ -69,6 +66,6 @@
     }
 
     ul a.selected {
-        color: @brand-secondary;
+        color: lightblue;
     }
 }
