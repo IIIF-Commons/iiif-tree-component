@@ -22,6 +22,7 @@ var GulpConfig = (function () {
         ];
         this.examplesDir = './examples';
         this.examplesDepsDir = './examples/js';
+        this.examplesCssDir = './examples/css';
         this.dist = './dist';
         this.jsOut = this.name + '.js';
         this.jsMinOut = this.name + '.min.js';
@@ -47,6 +48,12 @@ var GulpConfig = (function () {
         };
         this.browserifySrc = this.dist;
         this.browserifyTarget = this.dist;
+        this.cssOut = this.name + '.css';
+        this.cssSrc = [
+            'src/css/**/*.less'
+        ];
+        this.examplesImgDir = './examples/img';
+        this.imgSrc = './src/img/**';
     }
     return GulpConfig;
 })();
