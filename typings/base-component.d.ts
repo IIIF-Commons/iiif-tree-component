@@ -34,6 +34,7 @@ declare namespace Components {
         protected _getDefaultOptions(): IBaseComponentOptions;
         protected _emit(event: string, ...args: any[]): void;
         protected _resize(): void;
+        databind(data: any): void;
     }
     function applyMixins(derivedCtor: any, baseCtors: any[]): void;
 }
@@ -41,6 +42,7 @@ declare namespace Components {
 declare namespace Components {
     interface IBaseComponent {
         options: IBaseComponentOptions;
+        databind(data: any): void;
     }
 }
 
