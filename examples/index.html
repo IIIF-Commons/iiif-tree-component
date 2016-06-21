@@ -35,9 +35,8 @@
             // http://dams.llgc.org.uk/iiif/newspapers/4651124.json (Abergele and Pensarn Visitor 1909-1910)
             // http://wellcomelibrary.org/iiif/b19646045/manifest (Ranges with overlapping canvases)
 
-            Manifold.loadManifest({
+            manifold.loadManifest({
                 iiifResourceUri: 'http://wellcomelibrary.org/iiif/b19646045/manifest',
-                licenseMap: {},
                 collectionIndex: 0,
                 manifestIndex: 0,
                 sequenceIndex: 0,
@@ -65,7 +64,7 @@
                 
                 multiSelectState = helper.getMultiSelectState();
 
-                databindTree(Manifold.TreeSortType.none);
+                databindTree(manifold.TreeSortType.none);
 
             }).catch(function() {
                 console.error('failed to load manifest');
