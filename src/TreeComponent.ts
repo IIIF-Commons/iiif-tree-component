@@ -257,7 +257,7 @@ namespace IIIFComponents {
             if (this._selectedNode) this._setNodeSelected(this._selectedNode, false);
         }
 
-        public selectNode(node: any): void{
+        public selectNode(node: any): void {
             if (!this._rootNode) return;
 
             this.deselectCurrentNode();
