@@ -36,7 +36,7 @@
             // http://wellcomelibrary.org/iiif/b19646045/manifest (Ranges with overlapping canvases)
 
             manifold.loadManifest({
-                iiifResourceUri: 'http://wellcomelibrary.org/iiif/b19646045/manifest',
+                iiifResourceUri: 'http://wellcomelibrary.org/iiif/collection/b19974760',
                 collectionIndex: 0,
                 manifestIndex: 0,
                 sequenceIndex: 0,
@@ -109,12 +109,12 @@
             
             $('#sortByDate').on('click', function(e) {
                 e.preventDefault();
-                databindTree(Manifold.TreeSortType.date);
+                databindTree(manifold.TreeSortType.date());
             });
             
             $('#sortByDefault').on('click', function(e) {
                 e.preventDefault();                
-                databindTree(Manifold.TreeSortType.none);
+                databindTree(manifold.TreeSortType.none());
             });
             
         });
