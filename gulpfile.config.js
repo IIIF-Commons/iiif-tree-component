@@ -6,7 +6,7 @@ var GulpConfig = (function () {
         this.header = '// ' + this.name + ' v' + metadata.version + ' ' + metadata.homepage + '\n';
         // libs that MUST be included in a consuming app for this component to work
         this.deps = [
-            'node_modules/base-component/dist/base-component.js',
+            'node_modules/base-component/dist/base-component.bundle.js',
             'node_modules/utils/dist/utils.min.js'
         ];
         // ts definitions to copy to the typings dir

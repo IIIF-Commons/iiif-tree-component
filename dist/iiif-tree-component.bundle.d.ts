@@ -1,30 +1,9 @@
 // base-component v1.0.1 https://github.com/edsilv/base-component#readme
-
-interface EventEmitter2Configuration {
-    delimiter?: string;
-    maxListeners?: number;
-    wildcard?: string;
-    newListener?: Function;
+interface Window {
+    Components: any;
 }
 
-interface IEventEmitter2 {
-    constructor(conf?: EventEmitter2Configuration);
-    addListener(event: string, listener: Function): IEventEmitter2;
-    on(event: string, listener: Function): IEventEmitter2;
-    onAny(listener: Function): IEventEmitter2;
-    offAny(listener: Function): IEventEmitter2;
-    once(event: string, listener: Function): IEventEmitter2;
-    many(event: string, timesToListen: number, listener: Function): IEventEmitter2;
-    removeListener(event: string, listener: Function): IEventEmitter2;
-    off(event: string, listener: Function): IEventEmitter2;
-    removeAllListeners(event?: string): IEventEmitter2;
-    setMaxListeners(n: number): void;
-    listeners(event: string): Function[];
-    listenersAny(): Function[];
-    emit(event: string, ...args: any[]);
-}
-
-declare var EventEmitter2: IEventEmitter2;
+declare var TinyEmitter: any;
 declare namespace Components {
     class BaseComponent implements IBaseComponent {
         options: IBaseComponentOptions;
@@ -52,7 +31,7 @@ declare namespace Components {
     }
 }
 
-// manifesto.js v0.1.25 https://github.com/universalviewer/manifesto
+// manifesto.js v0.1.26 https://github.com/universalviewer/manifesto
 declare module exjs {
     var version: string;
 }
@@ -935,6 +914,7 @@ declare module Manifesto {
 }
 
 declare var http: any;
+declare var https: any;
 declare var url: any;
 declare var manifesto: IManifesto;
 declare module Manifesto {
@@ -1304,7 +1284,6 @@ declare module Manifold {
         getManifestType(): Manifesto.ManifestType;
         getMetadata(licenseFormatter?: Manifold.UriLabeller): Manifold.IMetadataItem[];
         getMultiSelectState(): Manifold.MultiSelectState;
-        getPagedIndices(canvasIndex?: number): number[];
         getRanges(): IRange[];
         getRangeByPath(path: string): any;
         getRangeCanvases(range: Manifesto.IRange): Manifesto.ICanvas[];
@@ -1318,7 +1297,7 @@ declare module Manifold {
         getTotalCanvases(): number;
         getTrackingLabel(): string;
         getTree(sortType?: TreeSortType): ITreeNode;
-        private _treeHasNavDates(tree);
+        treeHasNavDates(tree: ITreeNode): boolean;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): Manifesto.ViewingHint;
         hasParentCollection(): boolean;
@@ -1398,7 +1377,6 @@ declare module Manifold {
         getManifestType(): Manifesto.ManifestType;
         getMetadata(): Manifold.IMetadataItem[];
         getMultiSelectState(): Manifold.MultiSelectState;
-        getPagedIndices(canvasIndex?: number): number[];
         getRanges(): IRange[];
         getRangeByPath(path: string): any;
         getRangeCanvases(range: Manifesto.IRange): Manifesto.ICanvas[];
@@ -1433,11 +1411,13 @@ declare module Manifold {
         isTotalCanvasesEven(): boolean;
         isUIEnabled(name: string): boolean;
         isVerticallyAligned(): boolean;
+        treeHasNavDates(tree: ITreeNode): boolean;
     }
 }
 
 interface IManifold {
     loadManifest: (options: Manifold.IManifoldOptions) => Promise<Manifold.IHelper>;
+    TreeSortType: Manifold.TreeSortType;
 }
 
 declare module Manifold {
@@ -1487,7 +1467,7 @@ declare module Manifold {
 
 declare module Manifold {
     class MultiSelectState {
-        enabled: boolean;
+        isEnabled: boolean;
         ranges: IRange[];
         canvases: ICanvas[];
         allCanvasesSelected(): boolean;
