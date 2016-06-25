@@ -1244,7 +1244,9 @@ declare module Manifold {
     class Bootstrapper {
         private _options;
         constructor(options: Manifold.IManifoldOptions);
-        bootstrap(): Promise<Manifold.Helper>;
+        bootstrap(): Promise<Manifold.IHelper>;
+        private _loaded(bootstrapper, json, resolve, reject);
+        private _msieversion();
     }
 }
 
@@ -1424,6 +1426,7 @@ declare module Manifold {
     interface IManifoldOptions {
         iiifResourceUri: string;
         iiifResource: Manifesto.IIIIFResource;
+        locale: string;
         manifest: Manifesto.IManifest;
         collectionIndex: number;
         manifestIndex: number;
