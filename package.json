@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/edsilv/iiif-tree-component#readme",
   "devDependencies": {
-    "base-component": "git://github.com/edsilv/base-component.git#dev",
+    "base-component": "git://github.com/edsilv/base-component.git",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.1.0",
