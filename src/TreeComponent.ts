@@ -1,5 +1,5 @@
 namespace IIIFComponents {
-    export class TreeComponent extends Components.BaseComponent implements ITreeComponent {
+    export class TreeComponent extends _Components.BaseComponent implements ITreeComponent {
 
         public options: ITreeComponentOptions;
         private _$tree: JQuery;

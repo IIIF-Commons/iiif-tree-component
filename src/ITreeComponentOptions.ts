@@ -1,5 +1,5 @@
 namespace IIIFComponents{
-    export interface ITreeComponentOptions extends Components.IBaseComponentOptions {
+    export interface ITreeComponentOptions extends _Components.IBaseComponentOptions {
 
     }
 }
