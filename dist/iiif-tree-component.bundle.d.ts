@@ -1,4 +1,4 @@
-// base-component v1.0.1 https://github.com/edsilv/base-component#readme
+// base-component v1.0.1 https://github.com/viewdir/base-component#readme
 interface Window {
     _Components: any;
 }
@@ -3095,6 +3095,7 @@ interface JQueryStatic {
 
 declare namespace IIIFComponents {
     interface ITreeComponent extends _Components.IBaseComponent {
+        deselectCurrentNode(): void;
         getNodeById(id: string): Manifold.ITreeNode;
         selectNode(node: any): void;
         updateMultiSelectState(state: Manifold.MultiSelectState): void;
