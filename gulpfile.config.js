@@ -63,7 +63,7 @@ var GulpConfig = (function () {
         this.sources = {
             css: 'src/css/**/*.less',
             img: './src/img/**'
-        }
+        };
     }
     return GulpConfig;
 })();

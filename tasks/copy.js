@@ -9,7 +9,7 @@ gulp.task('copy:bundle', function() {
 });
 
 gulp.task('copy:typings', function() {
-    return gulp.src(config.directories.typings).pipe(gulp.dest(config.directories.typings));
+    return gulp.src(config.dependencies.typings).pipe(gulp.dest(config.directories.typings));
 });
 
 gulp.task('copy:css', function() {
