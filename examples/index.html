@@ -7,7 +7,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsviews/0.9.76/jsviews.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/3.2.2/es6-promise.min.js"></script>
-    <script src="js/iiif-tree-component.bundle.js"></script>
+    <script src="js/base-component.bundle.js"></script>
+    <script src="js/iiif-tree-component.js"></script>
     <script src="js/manifold.bundle.js"></script>
 </head>
 <body>
@@ -35,6 +36,7 @@
             // http://digital.library.villanova.edu/Collection/vudl:3/IIIF (Villanova Collection)
             // http://dams.llgc.org.uk/iiif/newspapers/4651124.json (Abergele and Pensarn Visitor 1909-1910)
             // http://wellcomelibrary.org/iiif/b19646045/manifest (Ranges with overlapping canvases)
+            // https://edsilv.github.io/test-manifests/table-of-contents.json
 
             Manifold.loadManifest({
                 iiifResourceUri: 'http://wellcomelibrary.org/iiif/collection/b19974760',
@@ -47,7 +49,9 @@
                 helper = h;
                 
                 component = new IIIFComponents.TreeComponent({
-                    element: "#tree"
+                    element: "#tree",
+                    helper: h,
+                    treeSortType: Manifold.TreeSortType.NONE
                 });
 
                 component.on('treeNodeSelected', function(args) {
@@ -65,22 +69,21 @@
                 
                 multiSelectState = helper.getMultiSelectState();
 
-                databindTree(Manifold.TreeSortType.NONE);
+                databindTree();
 
             }).catch(function() {
                 console.error('failed to load manifest');
             });
             
-            function databindTree(treeSortType) {
-                rootNode = helper.getTree(treeSortType);  
-                component.databind(rootNode);
+            function databindTree() {
+                component.databind();
                 updateMultiSelectState();
             }
             
             function updateMultiSelectState() {
                 $('#selectAll').prop('checked', multiSelectState.allRangesSelected());                
                 $('#multiselect').prop('checked', multiSelectState.enabled);
-                component.updateMultiSelectState(multiSelectState);                
+                component.updateMultiSelectState();                
                 console.log(multiSelectState.getAllSelectedCanvases());
             }
 
@@ -110,12 +113,14 @@
             
             $('#sortByDate').on('click', function(e) {
                 e.preventDefault();
-                databindTree(Manifold.TreeSortType.DATE);
+                component.options.treeSortType = Manifold.TreeSortType.DATE;
+                databindTree();
             });
             
             $('#sortByDefault').on('click', function(e) {
-                e.preventDefault();                
-                databindTree(Manifold.TreeSortType.NONE);
+                e.preventDefault();
+                component.options.treeSortType = Manifold.TreeSortType.NONE;       
+                databindTree();
             });
             
         });

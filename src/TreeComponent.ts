@@ -6,7 +6,6 @@ namespace IIIFComponents {
         private _allNodes: Manifold.ITreeNode[]; // cache
         private _multiSelectableNodes: Manifold.ITreeNode[]; // cache
         private _selectedNode: Manifold.ITreeNode;
-        private _multiSelectState: Manifold.MultiSelectState;
         private _rootNode: Manifold.ITreeNode;
 
         constructor(options: ITreeComponentOptions) {
@@ -96,29 +95,34 @@ namespace IIIFComponents {
             return success;
         }
         
-        public databind(rootNode: Manifold.ITreeNode): void {
-            this._rootNode = rootNode;
+        public databind(): void {
+            this._rootNode = this.options.helper.getTree(this.options.treeSortType);
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
         }
-        
-        protected _getDefaultOptions(): ITreeComponentOptions {
-            return <ITreeComponentOptions>{
-            }
-        }
 
-        public updateMultiSelectState(state: Manifold.MultiSelectState): void {
+        public updateMultiSelectState(): void {
+            var state: Manifold.MultiSelectState = this._getMultiSelectState();
 
-            this._multiSelectState = state;
-
-            for (var i = 0; i < this._multiSelectState.ranges.length; i++) {
-                var range: Manifold.IRange = this._multiSelectState.ranges[i];
+            for (var i = 0; i < state.ranges.length; i++) {
+                var range: Manifold.IRange = state.ranges[i];
                 var node: Manifold.ITreeNode = this._getMultiSelectableNodes().en().where(n => n.data.id === range.id).first();
                 if (node){
                     this._setNodeMultiSelectEnabled(node, (<Manifold.IMultiSelectable>range).multiSelectEnabled);
                     this._setNodeMultiSelected(node, range.multiSelected);
                 }
+            }
+        }
+        
+        private _getMultiSelectState(): Manifold.MultiSelectState {
+            return this.options.helper.getMultiSelectState();
+        } 
+
+        protected _getDefaultOptions(): ITreeComponentOptions {
+            return <ITreeComponentOptions>{
+                helper: null,
+                treeSortType: Manifold.TreeSortType.NONE
             }
         }
 

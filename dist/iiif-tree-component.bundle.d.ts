@@ -3098,12 +3098,13 @@ declare namespace IIIFComponents {
         deselectCurrentNode(): void;
         getNodeById(id: string): Manifold.ITreeNode;
         selectNode(node: any): void;
-        updateMultiSelectState(state: Manifold.MultiSelectState): void;
     }
 }
 
 declare namespace IIIFComponents {
     interface ITreeComponentOptions extends _Components.IBaseComponentOptions {
+        helper: Manifold.IHelper;
+        treeSortType: Manifold.TreeSortType;
     }
 }
 
@@ -3114,13 +3115,13 @@ declare namespace IIIFComponents {
         private _allNodes;
         private _multiSelectableNodes;
         private _selectedNode;
-        private _multiSelectState;
         private _rootNode;
         constructor(options: ITreeComponentOptions);
         protected _init(): boolean;
-        databind(rootNode: Manifold.ITreeNode): void;
+        databind(): void;
+        updateMultiSelectState(): void;
+        private _getMultiSelectState();
         protected _getDefaultOptions(): ITreeComponentOptions;
-        updateMultiSelectState(state: Manifold.MultiSelectState): void;
         allNodesSelected(): boolean;
         private _getMultiSelectableNodes();
         private _nodeIsMultiSelectable(node);

@@ -3,6 +3,5 @@ namespace IIIFComponents {
         deselectCurrentNode(): void;
         getNodeById(id: string): Manifold.ITreeNode;
         selectNode(node: any): void;
-        updateMultiSelectState(state: Manifold.MultiSelectState): void;
     }
 }
