@@ -5,12 +5,14 @@ declare namespace IIIFComponents {
         deselectCurrentNode(): void;
         getNodeById(id: string): Manifold.ITreeNode;
         selectNode(node: any): void;
+        updateMultiSelectState(state: Manifold.MultiSelectState): void;
     }
 }
 
 declare namespace IIIFComponents {
     interface ITreeComponentOptions extends _Components.IBaseComponentOptions {
         helper: Manifold.IHelper;
+        topRangeIndex: number;
         treeSortType: Manifold.TreeSortType;
     }
 }

@@ -94,11 +94,13 @@ var IIIFComponents;
             return success;
         };
         TreeComponent.prototype.databind = function () {
-            this._rootNode = this.options.helper.getTree(this.options.treeSortType);
+            this._rootNode = this.options.helper.getTree(this.options.topRangeIndex, this.options.treeSortType);
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
         };
+        // todo: this should be removed in order to fit with the 'reactive' pattern
+        // all changes shold be a result of calling databind() with options/props. 
         TreeComponent.prototype.updateMultiSelectState = function () {
             var state = this._getMultiSelectState();
             for (var i = 0; i < state.ranges.length; i++) {
@@ -116,6 +118,7 @@ var IIIFComponents;
         TreeComponent.prototype._getDefaultOptions = function () {
             return {
                 helper: null,
+                topRangeIndex: 0,
                 treeSortType: Manifold.TreeSortType.NONE
             };
         };

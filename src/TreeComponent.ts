@@ -96,12 +96,14 @@ namespace IIIFComponents {
         }
         
         public databind(): void {
-            this._rootNode = this.options.helper.getTree(this.options.treeSortType);
+            this._rootNode = this.options.helper.getTree(this.options.topRangeIndex, this.options.treeSortType);
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
         }
 
+        // todo: this should be removed in order to fit with the 'reactive' pattern
+        // all changes shold be a result of calling databind() with options/props. 
         public updateMultiSelectState(): void {
             var state: Manifold.MultiSelectState = this._getMultiSelectState();
 
@@ -122,6 +124,7 @@ namespace IIIFComponents {
         protected _getDefaultOptions(): ITreeComponentOptions {
             return <ITreeComponentOptions>{
                 helper: null,
+                topRangeIndex: 0,
                 treeSortType: Manifold.TreeSortType.NONE
             }
         }
