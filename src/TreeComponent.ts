@@ -58,11 +58,18 @@ namespace IIIFComponents {
             $.views.tags({
                 tree: {
                     toggleExpanded: function() {
-                        that._setNodeExpanded(this.data, !this.data.expanded);
+                        var node: Manifold.ITreeNode = this.data;
+                        that._setNodeExpanded(node, !node.expanded);
                     },
                     toggleMultiSelect: function() {
-                        that._setNodeMultiSelected(this.data, !!!this.data.multiSelected);
-                        that._emit(TreeComponent.Events.TREE_NODE_MULTISELECTED, this.data);
+                        var node: Manifold.ITreeNode = this.data;
+                        that._setNodeMultiSelected(node, !!!node.multiSelected);
+                        
+                        if (node.isRange()){
+                            that._getMultiSelectState().selectRange(<Manifold.IRange>node.data, node.multiSelected);      
+                        }
+                        
+                        that._emit(TreeComponent.Events.TREE_NODE_MULTISELECTED, node);
                     },
                     init: function (tagCtx, linkCtx, ctx) {
                         this.data = tagCtx.view.data;

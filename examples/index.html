@@ -60,10 +60,7 @@
                 });
                 
                 component.on('treeNodeMultiSelected', function(args) {
-                    var node = args[0];
-                    var range = node.data;
-                    multiSelectState.selectRange(range, node.multiSelected);                    
-                    console.log('multi-selected: ' + node.label);                    
+                    var node = args[0];                
                     updateMultiSelectState();
                 });
                 
