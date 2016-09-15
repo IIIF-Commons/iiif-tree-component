@@ -107,9 +107,6 @@ namespace IIIFComponents {
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
-            if (this._selectedNode){
-                this.selectNode(this._selectedNode);
-            }
         }
 
         // todo: this should be removed in order to fit with the 'reactive' pattern
