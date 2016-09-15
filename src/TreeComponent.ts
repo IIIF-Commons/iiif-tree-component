@@ -84,12 +84,15 @@ namespace IIIFComponents {
                             }).on('click', 'a', function(e) {
                                 e.preventDefault();
                                 
-                                if (self.data.nodes.length) self.toggleExpanded();
+                                var node: Manifold.ITreeNode = self.data;
 
-                                if (self.data.multiSelectEnabled){
+                                if (node.nodes.length) self.toggleExpanded();
+
+                                if (node.multiSelectEnabled){
                                     self.toggleMultiSelect();
                                 } else {
-                                    that._emit(TreeComponent.Events.TREE_NODE_SELECTED, self.data);
+                                    that._emit(TreeComponent.Events.TREE_NODE_SELECTED, node);
+                                    that.selectNode(node);
                                 }
                             }).on('click', 'input.multiSelect', function(e) {
                                 self.toggleMultiSelect();

@@ -81,13 +81,15 @@ var IIIFComponents;
                             self.toggleExpanded();
                         }).on('click', 'a', function (e) {
                             e.preventDefault();
-                            if (self.data.nodes.length)
+                            var node = self.data;
+                            if (node.nodes.length)
                                 self.toggleExpanded();
-                            if (self.data.multiSelectEnabled) {
+                            if (node.multiSelectEnabled) {
                                 self.toggleMultiSelect();
                             }
                             else {
-                                that._emit(TreeComponent.Events.TREE_NODE_SELECTED, self.data);
+                                that._emit(TreeComponent.Events.TREE_NODE_SELECTED, node);
+                                that.selectNode(node);
                             }
                         }).on('click', 'input.multiSelect', function (e) {
                             self.toggleMultiSelect();

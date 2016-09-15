@@ -80,7 +80,7 @@
             function updateMultiSelectState() {
                 $('#selectAll').prop('checked', multiSelectState.allRangesSelected());                
                 $('#multiselect').prop('checked', multiSelectState.enabled);
-                component.updateMultiSelectState();                
+                component.updateMultiSelectState(); // todo: should MultiSelectState be observable? shouldn't need an imperative method to update
                 console.log(multiSelectState.getAllSelectedCanvases());
             }
 
