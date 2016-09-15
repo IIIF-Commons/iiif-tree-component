@@ -107,6 +107,9 @@ namespace IIIFComponents {
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
+            if (this._selectedNode){
+                this.selectNode(this._selectedNode);
+            }
         }
 
         // todo: this should be removed in order to fit with the 'reactive' pattern
@@ -262,7 +265,7 @@ namespace IIIFComponents {
 
             var pathArr = path.split("/");
             if (pathArr.length >= 1) pathArr.shift();
-            var node = this.getNodeByPath(this._rootNode, pathArr);
+            var node: Manifold.ITreeNode = this.getNodeByPath(this._rootNode, pathArr);
 
             this.selectNode(node);
         }
@@ -271,15 +274,12 @@ namespace IIIFComponents {
             if (this._selectedNode) this._setNodeSelected(this._selectedNode, false);
         }
 
-        public selectNode(node: any): void {
+        public selectNode(node: Manifold.ITreeNode): void {
             if (!this._rootNode) return;
 
             this.deselectCurrentNode();
             this._selectedNode = node;
             this._setNodeSelected(this._selectedNode, true);
-
-            // todo: rather than manipulating the tree directly, allow manifests to be multi-selectable in manifold
-            //this._updateParentNodes(this._selectedNode);
         }
 
         // walks down the tree using the specified path e.g. [2,2,0]

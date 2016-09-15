@@ -103,6 +103,9 @@ var IIIFComponents;
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
+            if (this._selectedNode) {
+                this.selectNode(this._selectedNode);
+            }
         };
         // todo: this should be removed in order to fit with the 'reactive' pattern
         // all changes shold be a result of calling databind() with options/props. 
@@ -237,8 +240,6 @@ var IIIFComponents;
             this.deselectCurrentNode();
             this._selectedNode = node;
             this._setNodeSelected(this._selectedNode, true);
-            // todo: rather than manipulating the tree directly, allow manifests to be multi-selectable in manifold
-            //this._updateParentNodes(this._selectedNode);
         };
         // walks down the tree using the specified path e.g. [2,2,0]
         TreeComponent.prototype.getNodeByPath = function (parentNode, path) {
