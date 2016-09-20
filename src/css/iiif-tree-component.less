@@ -1,10 +1,11 @@
 .iiif-tree-component{
     overflow: auto;
+    color: @text-color;
 
     .toggle {
         cursor: pointer;
         margin-top: 3px;
-        margin-right: 5px;
+        margin-right: @margin-small-horizontal;
         display: block;
         float: left;
         height: 10px;
@@ -16,13 +17,13 @@
         }
 
         &.multiSelect{
-            margin-left: 5px;
+            margin-left: @margin-small-horizontal;
         }
     }
 
     .spacer {
         margin-top: 3px;
-        margin-right: 5px;
+        margin-right: @margin-small-horizontal;
         display: block;
         float: left;
         height: 10px;
@@ -31,7 +32,7 @@
 
     input.multiSelect {
         margin-top: 0px;
-        margin-right: 5px;
+        margin-right: @margin-small-horizontal;
         display: block;
         float: left;
         height: 13px;
@@ -45,7 +46,7 @@
     }
 
     ul.tree ul {
-        margin-left: 15px;
+        margin-left: @margin-large-horizontal;
     }
 
     ul.tree li {
@@ -58,7 +59,7 @@
         }
     }
 
-    ul a.selected {
-        color: lightblue;
+    ul li a.selected {
+        color: @brand-secondary !important;
     }
 }

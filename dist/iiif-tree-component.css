@@ -1,5 +1,6 @@
 .iiif-tree-component {
   overflow: auto;
+  color: auto;
 }
 .iiif-tree-component .toggle {
   cursor: pointer;
@@ -51,8 +52,8 @@
   display: block;
   overflow: hidden;
 }
-.iiif-tree-component ul a.selected {
-  color: lightblue;
+.iiif-tree-component ul li a.selected {
+  color: lightblue !important;
 }
 body {
   font-family: Sans-Serif;
