@@ -92,7 +92,12 @@ namespace IIIFComponents {
                                     self.toggleMultiSelect();
                                 } else {
                                     that._emit(TreeComponent.Events.TREE_NODE_SELECTED, node);
-                                    that.selectNode(node);
+
+                                    if (!node.nodes.length) {
+                                        that.selectNode(node);
+                                    } else if (that.options.branchNodesSelectable) {
+                                        that.selectNode(node);
+                                    }
                                 }
                             }).on('click', 'input.multiSelect', function(e) {
                                 self.toggleMultiSelect();
@@ -133,6 +138,7 @@ namespace IIIFComponents {
 
         protected _getDefaultOptions(): ITreeComponentOptions {
             return <ITreeComponentOptions>{
+                branchNodesSelectable: true,
                 helper: null,
                 topRangeIndex: 0,
                 treeSortType: Manifold.TreeSortType.NONE

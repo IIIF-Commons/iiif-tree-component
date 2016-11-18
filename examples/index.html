@@ -37,6 +37,7 @@
             // http://dams.llgc.org.uk/iiif/newspapers/4651124.json (Abergele and Pensarn Visitor 1909-1910)
             // http://wellcomelibrary.org/iiif/b19646045/manifest (Ranges with overlapping canvases)
             // https://edsilv.github.io/test-manifests/table-of-contents.json
+            // http://dams.llgc.org.uk/iiif/archive/3975658/fonds.json
 
             Manifold.loadManifest({
                 iiifResourceUri: 'http://wellcomelibrary.org/iiif/collection/b19974760',
@@ -49,6 +50,7 @@
                 helper = h;
                 
                 component = new IIIFComponents.TreeComponent({
+                    branchNodesSelectable: false,
                     element: "#tree",
                     helper: h,
                     treeSortType: Manifold.TreeSortType.NONE
