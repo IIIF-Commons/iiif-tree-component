@@ -92,8 +92,10 @@ namespace IIIFComponents {
                                     self.toggleMultiSelect();
                                 } else {
                                     if (!node.nodes.length) {
+                                        that._emit(TreeComponent.Events.TREE_NODE_SELECTED, node);
                                         that.selectNode(node);
                                     } else if (that.options.branchNodesSelectable) {
+                                        that._emit(TreeComponent.Events.TREE_NODE_SELECTED, node);
                                         that.selectNode(node);
                                     }
                                 }
@@ -280,8 +282,6 @@ namespace IIIFComponents {
 
         public selectNode(node: Manifold.ITreeNode): void {
             if (!this._rootNode) return;
-
-            this._emit(TreeComponent.Events.TREE_NODE_SELECTED, node);
 
             this.deselectCurrentNode();
             this._selectedNode = node;
