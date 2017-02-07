@@ -1,14 +1,14 @@
 namespace IIIFComponents {
     export class TreeComponent extends _Components.BaseComponent implements ITreeComponent {
 
-        public options: ITreeComponentOptions;
+        public options: _Components.IBaseComponentOptions;
         private _$tree: JQuery;
-        private _allNodes: Manifold.ITreeNode[]; // cache
-        private _multiSelectableNodes: Manifold.ITreeNode[]; // cache
+        private _allNodes: Manifold.ITreeNode[] | null; // cache
+        private _multiSelectableNodes: Manifold.ITreeNode[] | null; // cache
         private _selectedNode: Manifold.ITreeNode;
         private _rootNode: Manifold.ITreeNode;
 
-        constructor(options: ITreeComponentOptions) {
+        constructor(options: _Components.IBaseComponentOptions) {
             super(options);
             this._init();
         }
@@ -69,7 +69,7 @@ namespace IIIFComponents {
                             that._getMultiSelectState().selectRange(<Manifold.IRange>node.data, node.multiSelected);      
                         }
                         
-                        that._emit(TreeComponent.Events.TREE_NODE_MULTISELECTED, node);
+                        that.fire(TreeComponent.Events.TREE_NODE_MULTISELECTED, node);
                     },
                     init: function (tagCtx, linkCtx, ctx) {
                         this.data = tagCtx.view.data;
@@ -92,10 +92,10 @@ namespace IIIFComponents {
                                     self.toggleMultiSelect();
                                 } else {
                                     if (!node.nodes.length) {
-                                        that._emit(TreeComponent.Events.TREE_NODE_SELECTED, node);
+                                        that.fire(TreeComponent.Events.TREE_NODE_SELECTED, node);
                                         that.selectNode(node);
-                                    } else if (that.options.branchNodesSelectable) {
-                                        that._emit(TreeComponent.Events.TREE_NODE_SELECTED, node);
+                                    } else if (that.options.data.branchNodesSelectable) {
+                                        that.fire(TreeComponent.Events.TREE_NODE_SELECTED, node);
                                         that.selectNode(node);
                                     }
                                 }
@@ -110,8 +110,8 @@ namespace IIIFComponents {
             return success;
         }
         
-        public databind(): void {
-            this._rootNode = this.options.helper.getTree(this.options.topRangeIndex, this.options.treeSortType);
+        public set(): void {
+            this._rootNode = this.options.data.helper.getTree(this.options.data.topRangeIndex, this.options.data.treeSortType);
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
@@ -133,11 +133,11 @@ namespace IIIFComponents {
         }
         
         private _getMultiSelectState(): Manifold.MultiSelectState {
-            return this.options.helper.getMultiSelectState();
+            return this.options.data.helper.getMultiSelectState();
         } 
 
-        protected _getDefaultOptions(): ITreeComponentOptions {
-            return <ITreeComponentOptions>{
+        public data(): ITreeComponentData {
+            return <ITreeComponentData>{
                 branchNodesSelectable: true,
                 helper: null,
                 topRangeIndex: 0,
@@ -291,8 +291,8 @@ namespace IIIFComponents {
         // walks down the tree using the specified path e.g. [2,2,0]
         public getNodeByPath(parentNode: Manifold.ITreeNode, path: string[]): Manifold.ITreeNode {
             if (path.length === 0) return parentNode;
-            var index = path.shift();
-            var node = parentNode.nodes[index];
+            const index: number = Number(path.shift());
+            const node = parentNode.nodes[index];
             return this.getNodeByPath(<Manifold.ITreeNode>node, path);
         }
 
@@ -317,10 +317,10 @@ namespace IIIFComponents.TreeComponent {
     }
 }
 
-(function(w) {
-    if (!w.IIIFComponents){
-        w.IIIFComponents = IIIFComponents;
+(function(g: any) {
+    if (!g.IIIFComponents){
+        g.IIIFComponents = IIIFComponents;
     } else {
-        w.IIIFComponents.TreeComponent = IIIFComponents.TreeComponent;
+        g.IIIFComponents.TreeComponent = IIIFComponents.TreeComponent;
     }
-})(window);
+})(global);

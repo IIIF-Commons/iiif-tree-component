@@ -50,10 +50,13 @@
                 helper = h;
                 
                 component = new IIIFComponents.TreeComponent({
-                    branchNodesSelectable: false,
-                    element: "#tree",
-                    helper: h,
-                    treeSortType: Manifold.TreeSortType.NONE
+                    target: document.querySelector('#tree'),
+                    data: {
+                        branchNodesSelectable: false,
+                        element: "#tree",
+                        helper: h,
+                        treeSortType: Manifold.TreeSortType.NONE
+                    }
                 });
 
                 component.on('treeNodeSelected', function(args) {
@@ -75,7 +78,7 @@
             });
             
             function databindTree() {
-                component.databind();
+                component.set();
                 updateMultiSelectState();
             }
             
@@ -112,13 +115,15 @@
             
             $('#sortByDate').on('click', function(e) {
                 e.preventDefault();
-                component.options.treeSortType = Manifold.TreeSortType.DATE;
+                // todo: use set() passing new data object
+                component.options.data.treeSortType = Manifold.TreeSortType.DATE;
                 databindTree();
             });
             
             $('#sortByDefault').on('click', function(e) {
                 e.preventDefault();
-                component.options.treeSortType = Manifold.TreeSortType.NONE;       
+                // todo: use set() passing new data object
+                component.options.data.treeSortType = Manifold.TreeSortType.NONE;       
                 databindTree();
             });
             

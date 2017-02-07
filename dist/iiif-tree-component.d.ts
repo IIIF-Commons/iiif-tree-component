@@ -1,4 +1,15 @@
 // iiif-tree-component v1.0.7 https://github.com/viewdir/iiif-tree-component#readme
+interface JQuery {
+    link: any;
+    render: any;
+}
+interface JQueryStatic {
+    observable: any;
+    templates: any;
+    views: any;
+    view: any;
+}
+
 
 declare namespace IIIFComponents {
     interface ITreeComponent extends _Components.IBaseComponent {
@@ -10,9 +21,9 @@ declare namespace IIIFComponents {
 }
 
 declare namespace IIIFComponents {
-    interface ITreeComponentOptions extends _Components.IBaseComponentOptions {
+    interface ITreeComponentData {
         branchNodesSelectable: boolean;
-        helper: Manifold.IHelper;
+        helper: Manifold.IHelper | null;
         topRangeIndex: number;
         treeSortType: Manifold.TreeSortType;
     }
@@ -20,18 +31,18 @@ declare namespace IIIFComponents {
 
 declare namespace IIIFComponents {
     class TreeComponent extends _Components.BaseComponent implements ITreeComponent {
-        options: ITreeComponentOptions;
+        options: _Components.IBaseComponentOptions;
         private _$tree;
         private _allNodes;
         private _multiSelectableNodes;
         private _selectedNode;
         private _rootNode;
-        constructor(options: ITreeComponentOptions);
+        constructor(options: _Components.IBaseComponentOptions);
         protected _init(): boolean;
-        databind(): void;
+        set(): void;
         updateMultiSelectState(): void;
         private _getMultiSelectState();
-        protected _getDefaultOptions(): ITreeComponentOptions;
+        data(): ITreeComponentData;
         allNodesSelected(): boolean;
         private _getMultiSelectableNodes();
         private _nodeIsMultiSelectable(node);
