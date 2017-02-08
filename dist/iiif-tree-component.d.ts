@@ -10,7 +10,6 @@ interface JQueryStatic {
     view: any;
 }
 
-
 declare namespace IIIFComponents {
     interface ITreeComponent extends _Components.IBaseComponent {
         deselectCurrentNode(): void;

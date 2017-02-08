@@ -1,6 +1,6 @@
 {
   "name": "iiif-tree-component",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,9 +17,9 @@
   },
   "homepage": "https://github.com/viewdir/iiif-tree-component#readme",
   "devDependencies": {
-    "base-component": "viewdir/base-component#tsupdate",
+    "base-component": "viewdir/base-component#v1.0.9",
     "gulp": "^3.9.1",
-    "gulp-tasks": "viewdir/gulp-tasks#tsupdate",
+    "gulp-tasks": "viewdir/gulp-tasks#v1.0.5",
     "manifold": "viewdir/manifold#v1.1.6",
     "typings": "^2.1.0",
     "utils": "edsilv/utils"
