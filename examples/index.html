@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href="css/iiif-tree-component.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsviews/0.9.76/jsviews.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/3.2.2/es6-promise.min.js"></script>
-    <script src="js/base-component.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+    <script src="js/base-component.js"></script>
     <script src="js/iiif-tree-component.js"></script>
     <script src="js/manifold.bundle.js"></script>
 </head>
@@ -59,13 +59,11 @@
                     }
                 });
 
-                component.on('treeNodeSelected', function(args) {
-                    var node = args[0];
+                component.on('treeNodeSelected', function(node) {
                     console.log('selected: ' + node.label);
                 });
                 
-                component.on('treeNodeMultiSelected', function(args) {
-                    var node = args[0];                
+                component.on('treeNodeMultiSelected', function(node) {             
                     updateMultiSelectState();
                 });
                 
