@@ -4,7 +4,6 @@
   "globalDependencies": {
     "base-component": "github:viewdir/base-component/dist/base-component.d.ts#es6",
     "ex": "github:BSick7/exjs/dist/ex.d.ts",
-    "jquery-plugins": "github:edsilv/jquery-plugins/dist/jquery-plugins.d.ts",
     "manifesto": "github:viewdir/manifesto/dist/manifesto.d.ts#es6",
     "manifold": "github:viewdir/manifold/dist/manifold.d.ts#es6"
   }

@@ -21,8 +21,7 @@
     "gulp": "^3.9.1",
     "gulp-tasks": "viewdir/gulp-tasks#v1.0.5",
     "manifold": "viewdir/manifold#es6",
-    "typings": "^2.1.0",
-    "utils": "edsilv/utils"
+    "typings": "^2.1.0"
   },
   "dependencies": {}
 }
