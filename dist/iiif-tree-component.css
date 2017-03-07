@@ -10,10 +10,10 @@
   float: left;
   height: 10px;
   width: 10px;
-  background-image: url('../img/plus.png');
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAQMAAAC3/F3+AAAAA3NCSVQICAjb4U/gAAAABlBMVEUjHyD///9mY0coAAAACXBIWXMAAAsSAAALEgHS3X78AAAAFnRFWHRDcmVhdGlvbiBUaW1lADAzLzIzLzEysFVRHgAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAAAWSURBVAiZY/h/gAGIPoPRATCCsMHiAPy6EMmRpJhhAAAAAElFTkSuQmCC");
 }
 .iiif-tree-component .toggle.expanded {
-  background-image: url('../img/minus.png');
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAQMAAAC3/F3+AAAAA3NCSVQICAjb4U/gAAAABlBMVEUjHyD///9mY0coAAAACXBIWXMAAAsSAAALEgHS3X78AAAAFnRFWHRDcmVhdGlvbiBUaW1lADAzLzIzLzEysFVRHgAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAAASSURBVAiZY/h/gAGODoARkggA/6IQ+fU4POkAAAAASUVORK5CYII=");
 }
 .iiif-tree-component .toggle.multiSelect {
   margin-left: 5px;
