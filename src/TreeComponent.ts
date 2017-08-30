@@ -110,7 +110,10 @@ namespace IIIFComponents {
             return success;
         }
         
-        public set(): void {
+        public set(data: ITreeComponentData): void {
+
+            this.options.data = data;
+
             this._rootNode = this.options.data.helper.getTree(this.options.data.topRangeIndex, this.options.data.treeSortType);
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache

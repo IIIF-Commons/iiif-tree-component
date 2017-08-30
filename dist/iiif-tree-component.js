@@ -111,7 +111,8 @@ var IIIFComponents;
             });
             return success;
         };
-        TreeComponent.prototype.set = function () {
+        TreeComponent.prototype.set = function (data) {
+            this.options.data = data;
             this._rootNode = this.options.data.helper.getTree(this.options.data.topRangeIndex, this.options.data.treeSortType);
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache

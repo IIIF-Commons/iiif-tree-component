@@ -39,7 +39,7 @@ declare namespace IIIFComponents {
         private _rootNode;
         constructor(options: _Components.IBaseComponentOptions);
         protected _init(): boolean;
-        set(): void;
+        set(data: ITreeComponentData): void;
         updateMultiSelectState(): void;
         private _getMultiSelectState();
         data(): ITreeComponentData;
