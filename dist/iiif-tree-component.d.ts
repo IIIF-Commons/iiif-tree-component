@@ -16,7 +16,6 @@ declare namespace IIIFComponents {
         deselectCurrentNode(): void;
         getNodeById(id: string): Manifold.ITreeNode;
         selectNode(node: Manifold.ITreeNode): void;
-        updateMultiSelectState(state: Manifold.MultiSelectState): void;
     }
 }
 
@@ -40,7 +39,7 @@ declare namespace IIIFComponents {
         constructor(options: _Components.IBaseComponentOptions);
         protected _init(): boolean;
         set(data: ITreeComponentData): void;
-        updateMultiSelectState(): void;
+        private _updateMultiSelectState();
         private _getMultiSelectState();
         data(): ITreeComponentData;
         allNodesSelected(): boolean;

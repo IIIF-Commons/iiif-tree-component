@@ -26,9 +26,21 @@
 
     <script>
 
-        var helper, component, rootNode, multiSelectState;
+        var helper, component, treeSortType, rootNode, multiSelectState;
         
         $(function() {
+
+            component = new IIIFComponents.TreeComponent({
+                target: document.querySelector('#tree')
+            });
+
+            component.on('treeNodeSelected', function(node) {
+                console.log('selected: ' + node.label);
+            });
+            
+            component.on('treeNodeMultiSelected', function(node) {             
+                render();
+            });
             
             // http://wellcomelibrary.org/iiif/b18035723/manifest (Wunder der Vererbung)
             // http://wellcomelibrary.org/iiif/collection/b19974760 (Chemist and Druggist)
@@ -48,44 +60,35 @@
             }).then(function(h){
                 
                 helper = h;
-                
-                component = new IIIFComponents.TreeComponent({
-                    target: document.querySelector('#tree'),
-                    data: {
-                        branchNodesSelectable: false,
-                        element: "#tree",
-                        helper: h,
-                        treeSortType: Manifold.TreeSortType.NONE
-                    }
-                });
-
-                component.on('treeNodeSelected', function(node) {
-                    console.log('selected: ' + node.label);
-                });
-                
-                component.on('treeNodeMultiSelected', function(node) {             
-                    updateMultiSelectState();
-                });
-                
+                treeSortType = Manifold.TreeSortType.NONE;
                 multiSelectState = helper.getMultiSelectState();
 
-                databindTree();
+                render();
 
             }).catch(function() {
                 console.error('failed to load manifest');
             });
             
-            function databindTree() {
-                component.set(component.options.data);
-                updateMultiSelectState();
-            }
-            
-            function updateMultiSelectState() {
+            function render() {
+
                 $('#selectAll').prop('checked', multiSelectState.allRangesSelected());                
                 $('#multiselect').prop('checked', multiSelectState.enabled);
-                component.updateMultiSelectState(); // todo: should MultiSelectState be observable? shouldn't need an imperative method to update
-                console.log(multiSelectState.getAllSelectedCanvases());
+
+                component.set({
+                    branchNodesSelectable: false,
+                    helper: helper,
+                    treeSortType: treeSortType
+                });
+
             }
+            
+            //function updateMultiSelectState() {
+                // $('#selectAll').prop('checked', multiSelectState.allRangesSelected());                
+                // $('#multiselect').prop('checked', multiSelectState.enabled);
+                //render();
+                //component.updateMultiSelectState(); // todo: this should be passed in component.set
+                //console.log(multiSelectState.getAllSelectedCanvases());
+            //}
 
             $('#multiselect').on('click', function() {
                 var $this = $(this);
@@ -96,7 +99,9 @@
                     multiSelectState.setEnabled(false);
                 }
                 
-                updateMultiSelectState();
+                render();
+
+                console.log(multiSelectState.getAllSelectedCanvases());
             });
             
             $('#selectAll').on('click', function() {
@@ -108,21 +113,21 @@
                     multiSelectState.selectAllRanges(false);
                 }
                 
-                updateMultiSelectState();
+                render();
+
+                console.log(multiSelectState.getAllSelectedCanvases());
             });
             
             $('#sortByDate').on('click', function(e) {
                 e.preventDefault();
-                // todo: use set() passing new data object
-                component.options.data.treeSortType = Manifold.TreeSortType.DATE;
-                databindTree();
+                treeSortType = Manifold.TreeSortType.DATE;
+                render();
             });
             
             $('#sortByDefault').on('click', function(e) {
                 e.preventDefault();
-                // todo: use set() passing new data object
-                component.options.data.treeSortType = Manifold.TreeSortType.NONE;       
-                databindTree();
+                treeSortType = Manifold.TreeSortType.NONE;
+                render();
             });
             
         });

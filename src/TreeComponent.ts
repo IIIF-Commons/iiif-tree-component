@@ -118,11 +118,13 @@ namespace IIIFComponents {
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
+
+            this._updateMultiSelectState();
         }
 
         // todo: this should be removed in order to fit with the 'reactive' pattern
-        // all changes shold be a result of calling databind() with options/props. 
-        public updateMultiSelectState(): void {
+        // all changes shold be a result of calling set(). 
+        private _updateMultiSelectState(): void {
             var state: Manifold.MultiSelectState = this._getMultiSelectState();
 
             for (var i = 0; i < state.ranges.length; i++) {

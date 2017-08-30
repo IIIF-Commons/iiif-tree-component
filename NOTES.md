@@ -1,0 +1,1 @@
+For the render method to work (re-render everything every time state changes), we need to store the expanded state of each node and open them accordingly
