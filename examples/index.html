@@ -38,8 +38,12 @@
                 console.log('selected: ' + node.label);
             });
             
-            component.on('treeNodeMultiSelected', function(node) {             
-                render();
+            component.on('treeNodeMultiSelected', function(node) {      
+
+                updateMultiSelectUI();
+
+                // todo: rendering doesn't preserve expanded state of nodes
+                //render();
             });
             
             // http://wellcomelibrary.org/iiif/b18035723/manifest (Wunder der Vererbung)
@@ -68,11 +72,17 @@
             }).catch(function() {
                 console.error('failed to load manifest');
             });
+
+            function updateMultiSelectUI() {
+                $('#selectAll').prop('checked', multiSelectState.allRangesSelected());                
+                $('#multiselect').prop('checked', multiSelectState.enabled);
+
+                console.log(multiSelectState.getAllSelectedCanvases());
+            }
             
             function render() {
 
-                $('#selectAll').prop('checked', multiSelectState.allRangesSelected());                
-                $('#multiselect').prop('checked', multiSelectState.enabled);
+                updateMultiSelectUI();
 
                 component.set({
                     branchNodesSelectable: false,
@@ -81,14 +91,6 @@
                 });
 
             }
-            
-            //function updateMultiSelectState() {
-                // $('#selectAll').prop('checked', multiSelectState.allRangesSelected());                
-                // $('#multiselect').prop('checked', multiSelectState.enabled);
-                //render();
-                //component.updateMultiSelectState(); // todo: this should be passed in component.set
-                //console.log(multiSelectState.getAllSelectedCanvases());
-            //}
 
             $('#multiselect').on('click', function() {
                 var $this = $(this);
@@ -100,8 +102,6 @@
                 }
                 
                 render();
-
-                console.log(multiSelectState.getAllSelectedCanvases());
             });
             
             $('#selectAll').on('click', function() {
@@ -114,8 +114,6 @@
                 }
                 
                 render();
-
-                console.log(multiSelectState.getAllSelectedCanvases());
             });
             
             $('#sortByDate').on('click', function(e) {
