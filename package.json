@@ -20,7 +20,7 @@
     "base-component": "viewdir/base-component#v1.1.0",
     "gulp": "^3.9.1",
     "gulp-tasks": "viewdir/gulp-tasks#v1.0.5",
-    "manifold": "viewdir/manifold#v1.2.0",
+    "manifold": "viewdir/manifold#v1.2.3",
     "typings": "^2.1.0"
   },
   "dependencies": {}

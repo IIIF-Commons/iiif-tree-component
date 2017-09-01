@@ -1,4 +1,4 @@
-// iiif-tree-component v1.1.0 https://github.com/viewdir/iiif-tree-component#readme
+// iiif-tree-component v1.1.1 https://github.com/viewdir/iiif-tree-component#readme
 /// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
 interface JQuery {
     link: any;
