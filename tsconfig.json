@@ -9,7 +9,13 @@
         "noUnusedLocals": true,
         "noUnusedParameters": false,
         "strictNullChecks": true,
-        "lib": ["es6"]
+        "lib": ["es6", "dom"],
+        "types": [
+            "manifesto.js",
+            "manifold",
+            "base-component",
+            "jquery"
+        ]
     },
     "files": [
         "src/Definitions.ts"

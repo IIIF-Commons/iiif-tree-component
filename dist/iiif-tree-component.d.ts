@@ -1,5 +1,4 @@
-// iiif-tree-component v1.1.2 https://github.com/viewdir/iiif-tree-component#readme
-/// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
+// iiif-tree-component v1.1.2 https://github.com/iiif-commons/iiif-tree-component#readme
 interface JQuery {
     link: any;
     render: any;
@@ -11,6 +10,7 @@ interface JQueryStatic {
     view: any;
 }
 
+/// <reference types="manifold" />
 declare namespace IIIFComponents {
     interface ITreeComponent extends _Components.IBaseComponent {
         deselectCurrentNode(): void;
@@ -19,6 +19,7 @@ declare namespace IIIFComponents {
     }
 }
 
+/// <reference types="manifold" />
 declare namespace IIIFComponents {
     interface ITreeComponentData {
         branchNodesSelectable: boolean;
@@ -28,6 +29,8 @@ declare namespace IIIFComponents {
     }
 }
 
+/// <reference types="base-component" />
+/// <reference types="manifold" />
 declare namespace IIIFComponents {
     class TreeComponent extends _Components.BaseComponent implements ITreeComponent {
         options: _Components.IBaseComponentOptions;
