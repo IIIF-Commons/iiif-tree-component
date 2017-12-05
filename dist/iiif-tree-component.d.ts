@@ -1,4 +1,4 @@
-// iiif-tree-component v1.1.3 https://github.com/iiif-commons/iiif-tree-component#readme
+// iiif-tree-component v1.1.4 https://github.com/iiif-commons/iiif-tree-component#readme
 interface JQuery {
     link: any;
     render: any;

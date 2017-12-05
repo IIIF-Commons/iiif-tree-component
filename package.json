@@ -1,6 +1,6 @@
 {
   "name": "iiif-tree-component",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "",
   "main": "index.js",
   "types": "./dist/iiif-tree-component.d.ts",
@@ -20,8 +20,8 @@
     "exjs": "BSick7/exjs#0.5.0",
     "gulp": "^3.9.1",
     "gulp-tasks": "iiif-commons/gulp-tasks#v1.0.7",
-    "manifesto.js": "^2.2.1",
-    "manifold": "iiif-commons/manifold#v1.2.12"
+    "manifesto.js": "2.2.2",
+    "manifold": "iiif-commons/manifold#v1.2.13"
   },
   "dependencies": {
     "@types/jquery": "^3.2.16"
