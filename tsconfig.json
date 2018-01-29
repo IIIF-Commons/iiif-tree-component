@@ -12,7 +12,7 @@
         "lib": ["es6", "dom"],
         "types": [
             "manifesto.js",
-            "manifold",
+            "@iiif/manifold",
             "base-component",
             "jquery"
         ]
@@ -21,7 +21,6 @@
         "src/Definitions.ts"
     ],
     "include": [
-        "src/**/*",
-        "typings/**/*"
+        "src/**/*"
     ]
 }
