@@ -20,6 +20,7 @@
 <body>
     
     <div>
+        <input id="autoExpand" type="checkbox" /><label for="autoExpand">Auto-expand</label>&nbsp;
         <input id="multiselect" type="checkbox" /><label for="multiselect">Multi-select</label>&nbsp;
         <input id="selectAll" type="checkbox" /><label for="selectAll">Select All</label>&nbsp;
         Sort by: <a id="sortByDefault" href="#">Default</a>/<a href="#" id="sortByDate">Date</a> &nbsp;
@@ -33,6 +34,7 @@
     <script>
 
         var helper, component, treeSortType, rootNode, multiSelectState;
+        var autoExpand = false;
         
         $(function() {
 
@@ -93,12 +95,18 @@
                 updateMultiSelectUI();
 
                 component.set({
+                    autoExpand: autoExpand,
                     branchNodesSelectable: false,
                     helper: helper,
                     treeSortType: treeSortType
                 });
 
             }
+
+            $('#autoExpand').on('click', function() {              
+                autoExpand = $(this).is(':checked');                
+                render();
+            });
 
             $('#multiselect').on('click', function() {
                 var $this = $(this);
