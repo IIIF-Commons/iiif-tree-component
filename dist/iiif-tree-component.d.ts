@@ -1,4 +1,4 @@
-// iiif-tree-component v1.1.6 https://github.com/iiif-commons/iiif-tree-component#readme
+// iiif-tree-component v1.1.7 https://github.com/iiif-commons/iiif-tree-component#readme
 interface JQuery {
     link: any;
     render: any;
@@ -25,6 +25,7 @@ declare namespace IIIFComponents {
         [key: string]: any;
         autoExpand?: boolean;
         branchNodesSelectable?: boolean;
+        branchNodesExpandOnClick?: boolean;
         helper?: Manifold.IHelper | null;
         topRangeIndex?: number;
         treeSortType?: Manifold.TreeSortType;

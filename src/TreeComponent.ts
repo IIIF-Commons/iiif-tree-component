@@ -86,7 +86,9 @@ namespace IIIFComponents {
                                 
                                 const node: Manifold.ITreeNode = self.data;
 
-                                if (node.nodes.length) self.toggleExpanded();
+                                if (node.nodes.length && that.options.data.branchNodesExpandOnClick) {
+                                    self.toggleExpanded();
+                                }
 
                                 if (node.multiSelectEnabled){
                                     self.toggleMultiSelect();
@@ -148,6 +150,7 @@ namespace IIIFComponents {
         public data(): ITreeComponentData {
             return <ITreeComponentData>{
                 autoExpand: false,
+                branchNodesExpandOnClick: true,
                 branchNodesSelectable: true,
                 helper: null,
                 topRangeIndex: 0,
