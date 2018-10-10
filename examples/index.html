@@ -3,19 +3,14 @@
 <head>
     <title>iiif-tree-component: examples</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="css/iiif-tree-component.css" />
+    <link rel="stylesheet" type="text/css" href="../dist/styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsviews/0.9.76/jsviews.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
-    <script src="js/base-component.js"></script>
-    <script src="js/iiif-tree-component.js"></script>
-
-    <!-- <script src="https://rawgit.com/BSick7/exjs/master/dist/ex.es3.min.js"></script>
-    <script src="https://rawgit.com/viewdir/manifesto/dev/dist/client/manifesto.js"></script>
-    <script src="https://rawgit.com/viewdir/manifold/dev/dist/manifold.js"></script> -->
-
+    <script src="https://unpkg.com/@iiif/base-component/dist/BaseComponent.js"></script>
     <script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
     <script src="https://unpkg.com/@iiif/manifold/dist/manifold.js"></script>
+    <script src="../dist/TreeComponent.js"></script>
 </head>
 <body>
     
@@ -62,7 +57,7 @@
             // http://wellcomelibrary.org/iiif/b19646045/manifest (Ranges with overlapping canvases)
             // https://edsilv.github.io/test-manifests/table-of-contents.json
             // http://dams.llgc.org.uk/iiif/archive/3975658/fonds.json
-            // https://viewdir.github.io/iiif-av-component/examples/data/iiif/lunchroom-manners.json
+            // https://iiif-commons.github.io/iiif-av-component/examples/data/iiif/lunchroom-manners.json
 
             Manifold.loadManifest({
                 iiifResourceUri: 'http://wellcomelibrary.org/iiif/collection/b19974760',

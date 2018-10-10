@@ -1,4 +1,21 @@
 namespace IIIFComponents {
+
+    export interface ITreeComponent extends _Components.IBaseComponent{
+        deselectCurrentNode(): void;
+        getNodeById(id: string): Manifold.ITreeNode;
+        selectNode(node: Manifold.ITreeNode): void;
+    }
+
+    export interface ITreeComponentData {
+        [key: string]: any;
+        autoExpand?: boolean;
+        branchNodesSelectable?: boolean;
+        branchNodesExpandOnClick?: boolean;
+        helper?: Manifold.IHelper | null;
+        topRangeIndex?: number;
+        treeSortType?: Manifold.TreeSortType;
+    }
+
     export class TreeComponent extends _Components.BaseComponent implements ITreeComponent {
 
         public options: _Components.IBaseComponentOptions;
@@ -197,17 +214,17 @@ namespace IIIFComponents {
             return this._getAllNodes().en().where((n) => n.id === id).first();
         }
 
-        private _multiSelectTreeNode(node: Manifold.ITreeNode, isSelected: boolean): void {
-            if (!this._nodeIsMultiSelectable(node)) return;
+        // private _multiSelectTreeNode(node: Manifold.ITreeNode, isSelected: boolean): void {
+        //     if (!this._nodeIsMultiSelectable(node)) return;
 
-            this._setNodeMultiSelected(node, isSelected);
+        //     this._setNodeMultiSelected(node, isSelected);
 
-            // recursively select/deselect child nodes
-            for (let i = 0; i < node.nodes.length; i++){
-                const n: Manifold.ITreeNode = <Manifold.ITreeNode>node.nodes[i];
-                this._multiSelectTreeNode(n, isSelected);
-            }
-        }
+        //     // recursively select/deselect child nodes
+        //     for (let i = 0; i < node.nodes.length; i++){
+        //         const n: Manifold.ITreeNode = <Manifold.ITreeNode>node.nodes[i];
+        //         this._multiSelectTreeNode(n, isSelected);
+        //     }
+        // }
 
         // private _updateParentNodes(node: Manifold.ITreeNode): void {
 
@@ -234,11 +251,11 @@ namespace IIIFComponents {
         //     this._updateParentNodes(parentNode);
         // }
 
-        private _expandParents(node: Manifold.ITreeNode): void{
-            if (!node.parentNode) return;
-            this._setNodeExpanded(<Manifold.ITreeNode>node.parentNode, true);
-            this._expandParents(<Manifold.ITreeNode>node.parentNode);
-        }
+        // private _expandParents(node: Manifold.ITreeNode): void{
+        //     if (!node.parentNode) return;
+        //     this._setNodeExpanded(<Manifold.ITreeNode>node.parentNode, true);
+        //     this._expandParents(<Manifold.ITreeNode>node.parentNode);
+        // }
 
         private _setNodeSelected(node: Manifold.ITreeNode, selected: boolean): void {
             $.observable(node).setProperty("selected", selected);
@@ -336,4 +353,18 @@ namespace IIIFComponents.TreeComponent {
     } else {
         g.IIIFComponents.TreeComponent = IIIFComponents.TreeComponent;
     }
-})(global);
+})(window);
+
+interface JQuery {
+    // jsviews
+    link: any;
+    render: any;
+}
+
+interface JQueryStatic {
+    // jsviews
+    observable: any;
+    templates: any;
+    views: any;
+    view: any;
+}
