@@ -1,11 +1,5 @@
 namespace IIIFComponents {
 
-    export interface ITreeComponent extends _Components.IBaseComponent{
-        deselectCurrentNode(): void;
-        getNodeById(id: string): Manifold.ITreeNode;
-        selectNode(node: Manifold.ITreeNode): void;
-    }
-
     export interface ITreeComponentData {
         [key: string]: any;
         autoExpand?: boolean;
@@ -16,7 +10,7 @@ namespace IIIFComponents {
         treeSortType?: Manifold.TreeSortType;
     }
 
-    export class TreeComponent extends _Components.BaseComponent implements ITreeComponent {
+    export class TreeComponent extends _Components.BaseComponent {
 
         public options: _Components.IBaseComponentOptions;
         private _$tree: JQuery;

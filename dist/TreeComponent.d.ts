@@ -1,11 +1,6 @@
-/// <reference types="@iiif/base-component" />
 /// <reference types="@iiif/manifold" />
+/// <reference types="@iiif/base-component" />
 declare namespace IIIFComponents {
-    interface ITreeComponent extends _Components.IBaseComponent {
-        deselectCurrentNode(): void;
-        getNodeById(id: string): Manifold.ITreeNode;
-        selectNode(node: Manifold.ITreeNode): void;
-    }
     interface ITreeComponentData {
         [key: string]: any;
         autoExpand?: boolean;
@@ -15,7 +10,7 @@ declare namespace IIIFComponents {
         topRangeIndex?: number;
         treeSortType?: Manifold.TreeSortType;
     }
-    class TreeComponent extends _Components.BaseComponent implements ITreeComponent {
+    class TreeComponent extends _Components.BaseComponent {
         options: _Components.IBaseComponentOptions;
         private _$tree;
         private _allNodes;
