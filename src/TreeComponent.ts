@@ -15,12 +15,14 @@ namespace IIIFComponents {
         public options: _Components.IBaseComponentOptions;
         private _$tree: JQuery;
         private _allNodes: Manifold.ITreeNode[] | null; // cache
+        private _data: ITreeComponentData = this.data();
         private _multiSelectableNodes: Manifold.ITreeNode[] | null; // cache
-        private _selectedNode: Manifold.ITreeNode;
         private _rootNode: Manifold.ITreeNode;
+        private _selectedNode: Manifold.ITreeNode;
 
         constructor(options: _Components.IBaseComponentOptions) {
             super(options);
+            this._data = this.options.data;
             this._init();
         }
 
@@ -77,7 +79,11 @@ namespace IIIFComponents {
                         that._setNodeMultiSelected(node, !!!node.multiSelected);
                         
                         if (node.isRange()) {
-                            that._getMultiSelectState().selectRange(<Manifold.IRange>node.data, node.multiSelected);      
+                            const multiSelectState: Manifold.MultiSelectState | null = that._getMultiSelectState();
+
+                            if (multiSelectState) {
+                                multiSelectState.selectRange(<Manifold.IRange>node.data, node.multiSelected);   
+                            }
                         }
                         
                         that.fire(TreeComponent.Events.TREE_NODE_MULTISELECTED, node);
@@ -97,7 +103,7 @@ namespace IIIFComponents {
                                 
                                 const node: Manifold.ITreeNode = self.data;
 
-                                if (node.nodes.length && that.options.data.branchNodesExpandOnClick) {
+                                if (node.nodes.length && that._data.branchNodesExpandOnClick) {
                                     self.toggleExpanded();
                                 }
 
@@ -107,7 +113,7 @@ namespace IIIFComponents {
                                     if (!node.nodes.length) {
                                         that.fire(TreeComponent.Events.TREE_NODE_SELECTED, node);
                                         that.selectNode(node);
-                                    } else if (that.options.data.branchNodesSelectable) {
+                                    } else if (that._data.branchNodesSelectable) {
                                         that.fire(TreeComponent.Events.TREE_NODE_SELECTED, node);
                                         that.selectNode(node);
                                     }
@@ -125,25 +131,31 @@ namespace IIIFComponents {
         
         public set(data: ITreeComponentData): void {
 
-            this.options.data = data;
+            this._data = Object.assign(this._data, data);
 
-            this._rootNode = this.options.data.helper.getTree(this.options.data.topRangeIndex, this.options.data.treeSortType);
+            if (!this._data.helper) {
+                return;
+            }
+
+            this._rootNode = this._data.helper.getTree(this._data.topRangeIndex, this._data.treeSortType) as Manifold.ITreeNode;
             this._allNodes = null; // delete cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
 
-            const multiSelectState: Manifold.MultiSelectState = this._getMultiSelectState();
+            const multiSelectState: Manifold.MultiSelectState | null = this._getMultiSelectState();
 
-            for (let i = 0; i < multiSelectState.ranges.length; i++) {
-                const range: Manifold.IRange = multiSelectState.ranges[i];
-                const node: Manifold.ITreeNode = this._getMultiSelectableNodes().en().where(n => n.data.id === range.id).first();
-                if (node){
-                    this._setNodeMultiSelectEnabled(node, (<Manifold.IMultiSelectable>range).multiSelectEnabled);
-                    this._setNodeMultiSelected(node, range.multiSelected);
+            if (multiSelectState) {
+                for (let i = 0; i < multiSelectState.ranges.length; i++) {
+                    const range: Manifold.IRange = multiSelectState.ranges[i];
+                    const node: Manifold.ITreeNode = this._getMultiSelectableNodes().en().where(n => n.data.id === range.id).first();
+                    if (node){
+                        this._setNodeMultiSelectEnabled(node, (<Manifold.IMultiSelectable>range).multiSelectEnabled);
+                        this._setNodeMultiSelected(node, range.multiSelected);
+                    }
                 }
             }
 
-            if (this.options.data.autoExpand) {
+            if (this._data.autoExpand) {
                 const allNodes: Manifesto.ITreeNode[] = this._getAllNodes();
 
                 allNodes.forEach((node: Manifold.ITreeNode, index: number) => {
@@ -154,8 +166,12 @@ namespace IIIFComponents {
             }
         }
         
-        private _getMultiSelectState(): Manifold.MultiSelectState {
-            return this.options.data.helper.getMultiSelectState();
+        private _getMultiSelectState(): Manifold.MultiSelectState | null {
+
+            if (this._data.helper) {
+                return this._data.helper.getMultiSelectState();
+            }
+            return null;
         } 
 
         public data(): ITreeComponentData {
