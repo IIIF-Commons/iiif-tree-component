@@ -24,6 +24,7 @@ namespace IIIFComponents {
             super(options);
             this._data = this.options.data;
             this._init();
+            this._resize();
         }
 
         protected _init(): boolean {
