@@ -8,8 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsviews/0.9.76/jsviews.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
     <script src="https://unpkg.com/@iiif/base-component/dist/BaseComponent.js"></script>
-    <script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
-    <script src="https://unpkg.com/@iiif/manifold/dist/manifold.js"></script>
+    <script src="https://unpkg.com/manifesto.js@4.0.0-pre.5/dist-umd/manifesto.js"></script>
+    <script src="https://unpkg.com/@iiif/manifold@2.0.0-pre.9/dist-umd/manifold.js"></script>
     <script src="../dist/TreeComponent.js"></script>
 </head>
 <body>
@@ -59,8 +59,8 @@
             // http://dams.llgc.org.uk/iiif/archive/3975658/fonds.json
             // https://iiif-commons.github.io/iiif-av-component/examples/data/iiif/lunchroom-manners.json
 
-            Manifold.loadManifest({
-                iiifResourceUri: 'https://iiif-commons.github.io/iiif-av-component/examples/data/iiif/lunchroom-manners.json',
+            manifold.loadManifest({
+                manifestUri: 'http://wellcomelibrary.org/iiif/collection/b19974760',
                 collectionIndex: 0,
                 manifestIndex: 0,
                 sequenceIndex: 0,
@@ -68,7 +68,7 @@
             }).then(function(h){
                 
                 helper = h;
-                treeSortType = Manifold.TreeSortType.NONE;
+                treeSortType = manifold.TreeSortType.NONE;
                 multiSelectState = helper.getMultiSelectState();
 
                 render();
@@ -130,13 +130,13 @@
             
             $('#sortByDate').on('click', function(e) {
                 e.preventDefault();
-                treeSortType = Manifold.TreeSortType.DATE;
+                treeSortType = manifold.TreeSortType.DATE;
                 render();
             });
             
             $('#sortByDefault').on('click', function(e) {
                 e.preventDefault();
-                treeSortType = Manifold.TreeSortType.NONE;
+                treeSortType = manifold.TreeSortType.NONE;
                 render();
             });
             
