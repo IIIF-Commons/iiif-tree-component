@@ -139,7 +139,7 @@ namespace IIIFComponents {
             }
 
             this._rootNode = this._data.helper.getTree(this._data.topRangeIndex, this._data.treeSortType) as Manifold.ITreeNode;
-            this._allNodes = null; // delete cache
+            const allNodes: Manifesto.ITreeNode[] = this._getAllNodes(); // refresh cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
 
@@ -156,15 +156,32 @@ namespace IIIFComponents {
                 }
             }
 
-            if (this._data.autoExpand) {
-                const allNodes: Manifesto.ITreeNode[] = this._getAllNodes();
+            // select current collection/manifest
+            if (this._data.helper) {
 
-                allNodes.forEach((node: Manifold.ITreeNode, index: number) => {
-                    if (node.nodes.length) {
-                        this._setNodeExpanded(node, true);
+                const collectionIndex: number = this._data.helper.collectionIndex;
+                const manifestIndex: number = this._data.helper.manifestIndex;
+
+                allNodes.map(node => {
+                    if (node.isCollection() && node.data.index === collectionIndex) {
+                        this.selectNode(node as Manifold.ITreeNode);
+                        this._setNodeExpanded(node as Manifold.ITreeNode, true);
+                    }
+                    
+                    if (node.isManifest() && node.data.index === manifestIndex) {
+                        this.selectNode(node as Manifold.ITreeNode);
                     }
                 });
             }
+
+            if (this._data.autoExpand) {
+                allNodes.forEach((node: Manifold.ITreeNode, index: number) => {
+                    if (node.nodes.length) {
+                        this._setNodeExpanded(node as Manifold.ITreeNode, true);
+                    }
+                });
+            }
+
         }
         
         private _getMultiSelectState(): Manifold.MultiSelectState | null {
