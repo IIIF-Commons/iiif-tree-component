@@ -139,7 +139,7 @@ namespace IIIFComponents {
             }
 
             this._rootNode = this._data.helper.getTree(this._data.topRangeIndex, this._data.treeSortType) as Manifold.ITreeNode;
-            const allNodes: Manifesto.ITreeNode[] = this._getAllNodes(); // refresh cache
+            this._allNodes = null; // refresh cache
             this._multiSelectableNodes = null; // delete cache
             this._$tree.link($.templates.pageTemplate, this._rootNode);
 
@@ -155,6 +155,8 @@ namespace IIIFComponents {
                     }
                 }
             }
+
+            const allNodes: Manifesto.ITreeNode[] = this._getAllNodes(); 
 
             // select current collection/manifest
             if (this._data.helper) {
