@@ -18,7 +18,7 @@ namespace IIIFComponents {
         private _data: ITreeComponentData = this.data();
         private _multiSelectableNodes: Manifold.ITreeNode[] | null; // cache
         private _rootNode: Manifold.ITreeNode;
-        private _selectedNode: Manifold.ITreeNode;
+        public selectedNode: Manifold.ITreeNode;
 
         constructor(options: _Components.IBaseComponentOptions) {
             super(options);
@@ -263,11 +263,11 @@ namespace IIIFComponents {
         //     this._updateParentNodes(parentNode);
         // }
 
-        // private _expandParents(node: Manifold.ITreeNode): void{
-        //     if (!node.parentNode) return;
-        //     this._setNodeExpanded(<Manifold.ITreeNode>node.parentNode, true);
-        //     this._expandParents(<Manifold.ITreeNode>node.parentNode);
-        // }
+        public expandParents(node: Manifold.ITreeNode, expand: boolean): void{
+            if (!node.parentNode) return;
+            this._setNodeExpanded(<Manifold.ITreeNode>node.parentNode, expand);
+            this.expandParents(<Manifold.ITreeNode>node.parentNode, expand);
+        }
 
         private _setNodeSelected(node: Manifold.ITreeNode, selected: boolean): void {
             $.observable(node).setProperty("selected", selected);
@@ -319,15 +319,15 @@ namespace IIIFComponents {
         }
 
         public deselectCurrentNode(): void {
-            if (this._selectedNode) this._setNodeSelected(this._selectedNode, false);
+            if (this.selectedNode) this._setNodeSelected(this.selectedNode, false);
         }
 
         public selectNode(node: Manifold.ITreeNode): void {
             if (!this._rootNode) return;
 
             this.deselectCurrentNode();
-            this._selectedNode = node;
-            this._setNodeSelected(this._selectedNode, true);
+            this.selectedNode = node;
+            this._setNodeSelected(this.selectedNode, true);
         }
 
         public expandNode(node: Manifold.ITreeNode, expanded: boolean): void {

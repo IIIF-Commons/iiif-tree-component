@@ -19,6 +19,7 @@
         <input id="autoExpand" type="checkbox" /><label for="autoExpand">Auto-expand</label>&nbsp;
         <input id="multiselect" type="checkbox" /><label for="multiselect">Multi-select</label>&nbsp;
         <input id="selectAll" type="checkbox" /><label for="selectAll">Select All</label>&nbsp;
+        <input id="expandParents" type="checkbox" /><label for="expandParents">Expand Parents</label>&nbsp;
         Sort by: <a id="sortByDefault" href="#">Default</a>/<a href="#" id="sortByDate">Date</a> &nbsp;
         <br/><br/>
     </div>
@@ -62,7 +63,7 @@
             // https://damsssl.llgc.org.uk/iiif/2.0/2373813/manifest.json
 
             Manifold.loadManifest({
-                iiifResourceUri: 'https://iiif-commons.github.io/iiif-av-component/examples/data/iiif/lunchroom-manners.json',
+                iiifResourceUri: 'http://wellcomelibrary.org/iiif/collection/b19974760',
                 collectionIndex: 0,
                 manifestIndex: 0,
                 sequenceIndex: 0,
@@ -128,6 +129,18 @@
                 }
                 
                 render();
+            });
+
+            $('#expandParents').on('click', function() {
+                var $this = $(this);
+                
+                if ($this.is(':checked')) {
+                    component.expandParents(component.selectedNode, true);
+                } else {
+                    component.expandParents(component.selectedNode, false);
+                }
+                
+                //render();
             });
             
             $('#sortByDate').on('click', function(e) {
