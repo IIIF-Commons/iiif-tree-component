@@ -156,25 +156,7 @@ namespace IIIFComponents {
                 }
             }
 
-            const allNodes: Manifesto.ITreeNode[] = this._getAllNodes(); 
-
-            // select current collection/manifest
-            if (this._data.helper) {
-
-                const collectionIndex: number = this._data.helper.collectionIndex;
-                const manifestIndex: number = this._data.helper.manifestIndex;
-
-                allNodes.map(node => {
-                    if (node.isCollection() && node.data.index === collectionIndex) {
-                        this.selectNode(node as Manifold.ITreeNode);
-                        this._setNodeExpanded(node as Manifold.ITreeNode, true);
-                    }
-                    
-                    if (node.isManifest() && node.data.index === manifestIndex) {
-                        this.selectNode(node as Manifold.ITreeNode);
-                    }
-                });
-            }
+            const allNodes: Manifesto.ITreeNode[] = this.getAllNodes(); 
 
             if (this._data.autoExpand) {
                 allNodes.forEach((node: Manifold.ITreeNode, index: number) => {
@@ -219,14 +201,14 @@ namespace IIIFComponents {
                 return this._multiSelectableNodes;
             }
 
-            return this._multiSelectableNodes = this._getAllNodes().en().where((n) => this._nodeIsMultiSelectable(n)).toArray();
+            return this._multiSelectableNodes = this.getAllNodes().en().where((n) => this._nodeIsMultiSelectable(n)).toArray();
         }
 
         private _nodeIsMultiSelectable(node: Manifold.ITreeNode): boolean {
             return (node.isManifest() && node.nodes.length > 0 || node.isRange());
         }
 
-        private _getAllNodes(): Manifold.ITreeNode[] {
+        public getAllNodes(): Manifold.ITreeNode[] {
 
             // if cached
             if (this._allNodes) {
@@ -237,11 +219,11 @@ namespace IIIFComponents {
         }
 
         public getMultiSelectedNodes(): Manifold.ITreeNode[] {
-            return this._getAllNodes().en().where((n) => this._nodeIsMultiSelectable(n) && n.multiSelected).toArray();
+            return this.getAllNodes().en().where((n) => this._nodeIsMultiSelectable(n) && n.multiSelected).toArray();
         }
 
         public getNodeById(id: string): Manifold.ITreeNode {
-            return this._getAllNodes().en().where((n) => n.id === id).first();
+            return this.getAllNodes().en().where((n) => n.id === id).first();
         }
 
         // private _multiSelectTreeNode(node: Manifold.ITreeNode, isSelected: boolean): void {
@@ -348,6 +330,11 @@ namespace IIIFComponents {
             this._setNodeSelected(this._selectedNode, true);
         }
 
+        public expandNode(node: Manifold.ITreeNode, expanded: boolean): void {
+            if (!this._rootNode) return;
+            this._setNodeExpanded(node, expanded)
+        }
+
         // walks down the tree using the specified path e.g. [2,2,0]
         public getNodeByPath(parentNode: Manifold.ITreeNode, path: string[]): Manifold.ITreeNode {
             if (path.length === 0) return parentNode;
@@ -361,7 +348,7 @@ namespace IIIFComponents {
         }
 
         public hide(): void {
-             this._$element.hide();
+            this._$element.hide();
         }
         
         protected _resize(): void {
