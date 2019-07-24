@@ -44,8 +44,10 @@ namespace IIIFComponents {
                                     {^{tree/}}\
                                 {{/for}}',
                 treeTemplate:   '<li>\
-                                    {^{if nodes && nodes.length}}\
+                                    {^{if nodes && nodes.length }}\
                                         <div class="toggle" data-link="class{merge:expanded toggle=\'expanded\'}"></div>\
+                                    {{else isManifest() || isCollection() }}\
+                                        <div class="toggle"></div>\
                                     {{else}}\
                                     <div class="spacer"></div>\
                                     {{/if}}\
@@ -73,7 +75,12 @@ namespace IIIFComponents {
                 tree: {
                     toggleExpanded: function() {
                         const node: Manifold.ITreeNode = this.data;
-                        that._setNodeExpanded(node, !node.expanded);
+
+                        if (node.nodes && node.nodes.length) {
+                            that._setNodeExpanded(node, !node.expanded);
+                        } else {
+                            that.fire(TreeComponent.Events.TREE_NODE_SELECTED, node);
+                        }
                     },
                     toggleMultiSelect: function() {
                         const node: Manifold.ITreeNode = this.data;
