@@ -3,14 +3,13 @@
 <head>
     <title>iiif-tree-component: examples</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../dist/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../dist-css/styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsviews/0.9.76/jsviews.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
-    <script src="https://unpkg.com/@iiif/base-component/dist/BaseComponent.js"></script>
-    <script src="https://unpkg.com/manifesto.js@4.0.0-pre.6/dist-umd/manifesto.js"></script>
-    <script src="https://unpkg.com/@iiif/manifold@2.0.0-pre.10/dist-umd/manifold.js"></script>
-    <script src="../dist/TreeComponent.js"></script>
+    <script src="https://unpkg.com/manifesto.js@4.0.0-pre.19/dist-umd/manifesto.js"></script>
+    <script src="https://unpkg.com/@iiif/manifold@2.0.0-pre.21/dist-umd/manifold.js"></script>
+    <script src="../dist-umd/IIIFTreeComponent.js"></script>
 </head>
 <body>
     
@@ -33,7 +32,7 @@
         
         $(function() {
 
-            component = new IIIFComponents.TreeComponent({
+            component = new IIIFTreeComponent.TreeComponent({
                 target: document.querySelector('#tree')
             });
 
