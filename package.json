@@ -1,9 +1,11 @@
 {
   "name": "@iiif/iiif-tree-component",
-  "version": "2.0.0-pre.2",
+  "version": "2.0.0-pre.3",
   "description": "",
-  "main": "./dist/TreeComponent.js",
-  "types": "./dist/TreeComponent.d.ts",
+  "main": "./dist-commonjs/index.js",
+  "module": "./dist-esmodule/index.js",
+  "browser": "./dist-umd/IIIFTreeComponent.js",
+  "types": "./types/index.d.ts",
   "scripts": {
     "build:css": "cross-env mkdir dist-css && npx lessc ./src/css/styles.less > ./dist-css/styles.css",
     "build:commonjs": "tsc",

@@ -51,7 +51,7 @@ export class TreeComponent extends BaseComponent {
     $.templates({
       pageTemplate:
         "{^{for nodes}}\
-						{^{tree/}}\
+					{^{tree/}}\
 				{{/for}}",
       treeTemplate:
         '<li>\
@@ -61,7 +61,7 @@ export class TreeComponent extends BaseComponent {
 						<div class="spacer"></div>\
 						{{/if}}\
 						{^{if multiSelectEnabled}}\
-								<input id="tree-checkbox-{{>id}}" type="checkbox" data-link="checked{:multiSelected ? \'checked\' : \'\'}" class="multiSelect" />\
+							<input id="tree-checkbox-{{>id}}" type="checkbox" data-link="checked{:multiSelected ? \'checked\' : \'\'}" class="multiSelect" />\
 						{{/if}}\
 						{^{if selected}}\
 							<a id="tree-link-{{>id}}" href="#" title="{{>label}}" class="selected">{{>label}}</a>\
@@ -213,7 +213,6 @@ export class TreeComponent extends BaseComponent {
   public allNodesSelected(): boolean {
     const applicableNodes: MultiSelectableTreeNode[] = this._getMultiSelectableNodes();
     const multiSelectedNodes: MultiSelectableTreeNode[] = this.getMultiSelectedNodes();
-
     return applicableNodes.length === multiSelectedNodes.length;
   }
 
@@ -345,25 +344,6 @@ export class TreeComponent extends BaseComponent {
   ): void {
     $.observable(node).setProperty("multiSelectEnabled", enabled);
   }
-
-  // private _setNodeIndeterminate(node: MultiSelectableTreeNode, indeterminate: boolean): void {
-  //     const $checkbox: JQuery = this._getNodeCheckbox(node);
-  //     $checkbox.prop("indeterminate", indeterminate);
-  // }
-
-  // private _getNodeCheckbox(node: MultiSelectableTreeNode): JQuery {
-  //     return $("#tree-checkbox-" + node.id);
-  // }
-
-  // private _getNodeSiblings(node: MultiSelectableTreeNode): MultiSelectableTreeNode[] {
-  //     const siblings: MultiSelectableTreeNode[] = [];
-
-  //     if (node.parentNode){
-  //         siblings = <MultiSelectableTreeNode[]>node.parentNode.nodes.en().where(n => n !== node).toArray();
-  //     }
-
-  //     return siblings;
-  // }
 
   public selectPath(path: string): void {
     if (!this._rootNode) return;
