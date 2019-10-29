@@ -8,7 +8,6 @@ const config = {
     entry: {
         'IIIFTreeComponent': ['./src/index.ts']
     },
-
     externals: {
         'node-fetch': 'node-fetch',
         'fetch-cookie/node-fetch': 'fetch-cookie/node-fetch',
