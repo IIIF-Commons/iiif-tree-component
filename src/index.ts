@@ -1,4 +1,4 @@
-import { TreeNodeType } from "manifesto.js";
+import { TreeNodeType, TreeNode } from "manifesto.js";
 import {
   Helper,
   MultiSelectableRange,
@@ -269,49 +269,12 @@ export class TreeComponent extends BaseComponent {
   public getNodeById(id: string): MultiSelectableTreeNode {
     return this._getAllNodes().filter(n => n.id === id)[0];
   }
-
-  // private _multiSelectTreeNode(node: MultiSelectableTreeNode, isSelected: boolean): void {
-  //     if (!this._nodeIsMultiSelectable(node)) return;
-
-  //     this._setNodeMultiSelected(node, isSelected);
-
-  //     // recursively select/deselect child nodes
-  //     for (let i = 0; i < node.nodes.length; i++){
-  //         const n: MultiSelectableTreeNode = <MultiSelectableTreeNode>node.nodes[i];
-  //         this._multiSelectTreeNode(n, isSelected);
-  //     }
-  // }
-
-  // private _updateParentNodes(node: MultiSelectableTreeNode): void {
-
-  //     const parentNode: MultiSelectableTreeNode = <MultiSelectableTreeNode>node.parentNode;
-
-  //     if (!parentNode) return;
-
-  //     // expand parents if selected
-  //     if (node.selected) {
-  //         this._expandParents(node);
-  //     }
-
-  //     // get the number of selected children.
-  //     const checkedCount: number = parentNode.nodes.en().where(n => (<MultiSelectableTreeNode>n).multiSelected).count();
-
-  //     // if any are checked, check the parent.
-  //     this._setNodeMultiSelected(parentNode, checkedCount > 0);
-
-  //     const indeterminate: boolean = checkedCount > 0 && checkedCount < parentNode.nodes.length;
-
-  //     this._setNodeIndeterminate(parentNode, indeterminate);
-
-  //     // cascade up tree
-  //     this._updateParentNodes(parentNode);
-  // }
-
-  // private _expandParents(node: MultiSelectableTreeNode): void{
-  //     if (!node.parentNode) return;
-  //     this._setNodeExpanded(<MultiSelectableTreeNode>node.parentNode, true);
-  //     this._expandParents(<MultiSelectableTreeNode>node.parentNode);
-  // }
+	
+	public expandParents(node: TreeNode, expand: boolean): void{
+		if (!node.parentNode) return;
+		this._setNodeExpanded(node.parentNode as MultiSelectableTreeNode, expand);
+		this.expandParents(node.parentNode, expand);
+	}
 
   private _setNodeSelected(
     node: MultiSelectableTreeNode,
@@ -332,10 +295,6 @@ export class TreeComponent extends BaseComponent {
     selected: boolean
   ): void {
     $.observable(node).setProperty("multiSelected", selected);
-
-    // if (!selected){
-    //     this._setNodeIndeterminate(node, false);
-    // }
   }
 
   private _setNodeMultiSelectEnabled(
