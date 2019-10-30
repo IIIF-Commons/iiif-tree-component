@@ -60,8 +60,8 @@
             // https://iiif-commons.github.io/iiif-av-component/examples/data/iiif/lunchroom-manners.json
             // https://damsssl.llgc.org.uk/iiif/2.0/2373813/manifest.json
 
-            Manifold.loadManifest({
-                iiifResourceUri: 'http://wellcomelibrary.org/iiif/collection/b19974760',
+            manifold.loadManifest({
+                manifestUri: "https://iiif-commons.github.io/iiif-av-component/examples/data/iiif/lunchroom-manners.json",
                 collectionIndex: 0,
                 manifestIndex: 0,
                 sequenceIndex: 0,
@@ -69,7 +69,7 @@
             }).then(function(h){
                 
                 helper = h;
-                treeSortType = Manifold.TreeSortType.NONE;
+                treeSortType = manifold.TreeSortType.NONE;
                 multiSelectState = helper.getMultiSelectState();
 
                 render();

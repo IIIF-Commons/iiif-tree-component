@@ -26,7 +26,7 @@ export class TreeComponent extends BaseComponent {
   private _data: ITreeComponentData = this.data();
   private _multiSelectableNodes: MultiSelectableTreeNode[] | null; // cache
   private _rootNode: MultiSelectableTreeNode;
-  private _selectedNode: MultiSelectableTreeNode;
+  public selectedNode: MultiSelectableTreeNode;
 
   constructor(options: IBaseComponentOptions) {
     super(options);
@@ -271,7 +271,7 @@ export class TreeComponent extends BaseComponent {
   }
 	
 	public expandParents(node: TreeNode, expand: boolean): void{
-		if (!node.parentNode) return;
+		if (!node || !node.parentNode) return;
 		this._setNodeExpanded(node.parentNode as MultiSelectableTreeNode, expand);
 		this.expandParents(node.parentNode, expand);
 	}
@@ -318,15 +318,15 @@ export class TreeComponent extends BaseComponent {
   }
 
   public deselectCurrentNode(): void {
-    if (this._selectedNode) this._setNodeSelected(this._selectedNode, false);
+    if (this.selectedNode) this._setNodeSelected(this.selectedNode, false);
   }
 
   public selectNode(node: MultiSelectableTreeNode): void {
     if (!this._rootNode) return;
 
     this.deselectCurrentNode();
-    this._selectedNode = node;
-    this._setNodeSelected(this._selectedNode, true);
+    this.selectedNode = node;
+    this._setNodeSelected(this.selectedNode, true);
   }
 
   // walks down the tree using the specified path e.g. [2,2,0]
