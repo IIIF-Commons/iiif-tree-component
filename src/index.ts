@@ -325,6 +325,11 @@ export class TreeComponent extends BaseComponent {
     this._setNodeSelected(this.selectedNode, true);
   }
 
+  public expandNode(node: TreeNode, expanded: boolean): void {
+    if (!this._rootNode) return;
+    this._setNodeExpanded(node as MultiSelectableTreeNode, expanded)
+  }
+
   // walks down the tree using the specified path e.g. [2,2,0]
   public getNodeByPath(
     parentNode: MultiSelectableTreeNode,
