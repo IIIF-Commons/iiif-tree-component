@@ -35,14 +35,10 @@ export class TreeComponent extends BaseComponent {
     this._resize();
   }
 
-  protected async _init(): Promise<boolean> {
-    const success: boolean = await super._init();
+  protected _init(): boolean {
+    super._init();
 
-    if (!success) {
-      console.error("TreeComponent failed to initialise");
-    }
-
-    this._$element = $(this._el);
+    this._$element = $(this.el);
     const that = this;
 
     this._$tree = $('<ul class="tree"></ul>');
@@ -145,7 +141,7 @@ export class TreeComponent extends BaseComponent {
       }
     });
 
-    return success;
+    return true;
   }
 
   public set(data: ITreeComponentData): void {
