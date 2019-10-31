@@ -182,7 +182,7 @@ export class TreeComponent extends BaseComponent {
     }
 
     if (this._data.autoExpand) {
-      const allNodes: MultiSelectableTreeNode[] = this._getAllNodes();
+      const allNodes: MultiSelectableTreeNode[] = this.getAllNodes();
 
       allNodes.forEach((node: MultiSelectableTreeNode, index: number) => {
         //if (node.nodes && node.nodes.length) {
@@ -222,7 +222,7 @@ export class TreeComponent extends BaseComponent {
       return this._multiSelectableNodes;
     }
 
-    const allNodes: MultiSelectableTreeNode[] | null = this._getAllNodes();
+    const allNodes: MultiSelectableTreeNode[] | null = this.getAllNodes();
 
     if (allNodes) {
       return (this._multiSelectableNodes = allNodes.filter(n =>
@@ -245,7 +245,7 @@ export class TreeComponent extends BaseComponent {
     return false;
   }
 
-  private _getAllNodes(): MultiSelectableTreeNode[] {
+  private getAllNodes(): MultiSelectableTreeNode[] {
     // if cached
     if (this._flattenedTree) {
       return this._flattenedTree;
@@ -261,13 +261,13 @@ export class TreeComponent extends BaseComponent {
   }
 
   public getMultiSelectedNodes(): MultiSelectableTreeNode[] {
-    return this._getAllNodes().filter(
+    return this.getAllNodes().filter(
       n => this._nodeIsMultiSelectable(n) && n.multiSelected
     );
   }
 
   public getNodeById(id: string): MultiSelectableTreeNode {
-    return this._getAllNodes().filter(n => n.id === id)[0];
+    return this.getAllNodes().filter(n => n.id === id)[0];
   }
 	
 	public expandParents(node: TreeNode, expand: boolean): void{
