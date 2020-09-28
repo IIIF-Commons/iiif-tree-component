@@ -31,6 +31,7 @@
   "homepage": "https://github.com/iiif-commons/iiif-tree-component#readme",
   "devDependencies": {
     "@types/node": "^8.10.52",
+    "@types/jquery": "2.0.34",
     "awesome-typescript-loader": "^5.2.1",
     "cross-env": "^5.2.1",
     "dts-bundle-generator": "^2.1.0",
@@ -43,9 +44,8 @@
     "webpack": "^4.28.3"
   },
   "dependencies": {
-    "@iiif/base-component": "2.0.1",
-    "@iiif/manifold": "2.0.2",
-    "@types/jquery": "2.0.34",
-    "manifesto.js": "4.0.1"
+    "@iiif/base-component": "2.*",
+    "@iiif/manifold": "2.*",
+    "manifesto.js": "4.*"
   }
 }
