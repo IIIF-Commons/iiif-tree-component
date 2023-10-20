@@ -50,7 +50,7 @@ export class TreeComponent extends BaseComponent {
 					{^{tree/}}\
 				{{/for}}",
       treeTemplate:
-        '<li>\
+        '<li dir={{>dir}}>\
 						{^{if nodes && nodes.length}}\
 							<div class="toggle" data-link="class{merge:expanded toggle=\'expanded\'}"></div>\
 						{{else}}\
@@ -100,8 +100,15 @@ export class TreeComponent extends BaseComponent {
           that.fire(Events.TREE_NODE_MULTISELECTED, node);
         },
         init: function(tagCtx, _linkCtx, _ctx) {
-          (this as any).data = tagCtx.view.data;
-          //this.data.text = this.data.label;
+          const data = tagCtx.view.data;
+          (this as any).data = data;
+
+          const lang: string = data.data.__jsonld.label['@language'];
+          data.dir = "ltr";
+
+          if (lang && that._data.rtlLanguageCodes.includes(lang.trim())) {
+            data.dir = "rtl";
+          }
         },
         onAfterLink: function() {
           const self: any = this;
@@ -202,7 +209,8 @@ export class TreeComponent extends BaseComponent {
       branchNodesSelectable: true,
       helper: null,
       topRangeIndex: 0,
-      treeSortType: TreeSortType.NONE
+      treeSortType: TreeSortType.NONE,
+      rtlLanguageCodes: "ar, ara, dv, div, he, heb, ur, urd",
     };
   }
 
