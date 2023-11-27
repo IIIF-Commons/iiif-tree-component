@@ -4,7 +4,7 @@ import {
   MultiSelectableRange,
   MultiSelectableTreeNode,
   MultiSelectState,
-  TreeSortType
+  TreeSortType,
 } from "@iiif/manifold";
 import { BaseComponent, IBaseComponentOptions } from "@iiif/base-component";
 
@@ -73,21 +73,22 @@ export class TreeComponent extends BaseComponent {
 									{{/for}}\
 							</ul>\
 					</li>\
-				{{/if}}'
+				{{/if}}',
     });
 
     $.views.tags({
       tree: {
-        toggleExpanded: function() {
+        toggleExpanded: function () {
           const node: MultiSelectableTreeNode = (this as any).data;
           that._setNodeExpanded(node, !node.expanded);
         },
-        toggleMultiSelect: function() {
+        toggleMultiSelect: function () {
           const node: MultiSelectableTreeNode = (this as any).data;
           that._setNodeMultiSelected(node, !!!node.multiSelected);
 
           if (node.isRange()) {
-            const multiSelectState: MultiSelectState | null = that._getMultiSelectState();
+            const multiSelectState: MultiSelectState | null =
+              that._getMultiSelectState();
 
             if (multiSelectState) {
               multiSelectState.selectRange(
@@ -99,27 +100,27 @@ export class TreeComponent extends BaseComponent {
 
           that.fire(Events.TREE_NODE_MULTISELECTED, node);
         },
-        init: function(tagCtx, _linkCtx, _ctx) {
+        init: function (tagCtx, _linkCtx, _ctx) {
           const data = tagCtx.view.data;
           (this as any).data = data;
 
-          const lang: string = data.data.__jsonld.label['@language'];
+          const lang: string = data.data.__jsonld?.label["@language"];
           data.dir = "ltr";
 
           if (lang && that._data.rtlLanguageCodes.includes(lang.trim())) {
             data.dir = "rtl";
           }
         },
-        onAfterLink: function() {
+        onAfterLink: function () {
           const self: any = this;
 
           self
             .contents("li")
             .first()
-            .on("click", ".toggle", function() {
+            .on("click", ".toggle", function () {
               self.toggleExpanded();
             })
-            .on("click", "a", function(e) {
+            .on("click", "a", function (e) {
               e.preventDefault();
 
               const node: MultiSelectableTreeNode = self.data;
@@ -140,12 +141,12 @@ export class TreeComponent extends BaseComponent {
                 }
               }
             })
-            .on("click", "input.multiSelect", function(e) {
+            .on("click", "input.multiSelect", function (e) {
               self.toggleMultiSelect();
             });
         },
-        template: $.templates.treeTemplate
-      }
+        template: $.templates.treeTemplate,
+      },
     });
 
     return true;
@@ -166,14 +167,16 @@ export class TreeComponent extends BaseComponent {
     this._multiSelectableNodes = null; // delete cache
     this._$tree.link($.templates.pageTemplate, this._rootNode);
 
-    const multiSelectState: MultiSelectState | null = this._getMultiSelectState();
+    const multiSelectState: MultiSelectState | null =
+      this._getMultiSelectState();
 
     if (multiSelectState) {
       for (let i = 0; i < multiSelectState.ranges.length; i++) {
         const range: MultiSelectableRange = multiSelectState.ranges[i];
-        const node: MultiSelectableTreeNode = this._getMultiSelectableNodes().filter(
-          n => n.data.id === range.id
-        )[0];
+        const node: MultiSelectableTreeNode =
+          this._getMultiSelectableNodes().filter(
+            (n) => n.data.id === range.id
+          )[0];
         if (node) {
           this._setNodeMultiSelectEnabled(
             node,
@@ -215,8 +218,10 @@ export class TreeComponent extends BaseComponent {
   }
 
   public allNodesSelected(): boolean {
-    const applicableNodes: MultiSelectableTreeNode[] = this._getMultiSelectableNodes();
-    const multiSelectedNodes: MultiSelectableTreeNode[] = this.getMultiSelectedNodes();
+    const applicableNodes: MultiSelectableTreeNode[] =
+      this._getMultiSelectableNodes();
+    const multiSelectedNodes: MultiSelectableTreeNode[] =
+      this.getMultiSelectedNodes();
     return applicableNodes.length === multiSelectedNodes.length;
   }
 
@@ -229,7 +234,7 @@ export class TreeComponent extends BaseComponent {
     const allNodes: MultiSelectableTreeNode[] | null = this.getAllNodes();
 
     if (allNodes) {
-      return (this._multiSelectableNodes = allNodes.filter(n =>
+      return (this._multiSelectableNodes = allNodes.filter((n) =>
         this._nodeIsMultiSelectable(n)
       ));
     }
@@ -240,7 +245,8 @@ export class TreeComponent extends BaseComponent {
   private _nodeIsMultiSelectable(node: MultiSelectableTreeNode): boolean {
     if (
       (node.data.type === TreeNodeType.MANIFEST &&
-        (node.nodes && node.nodes.length > 0)) ||
+        node.nodes &&
+        node.nodes.length > 0) ||
       node.data.type === TreeNodeType.RANGE
     ) {
       return true;
@@ -266,19 +272,19 @@ export class TreeComponent extends BaseComponent {
 
   public getMultiSelectedNodes(): MultiSelectableTreeNode[] {
     return this.getAllNodes().filter(
-      n => this._nodeIsMultiSelectable(n) && n.multiSelected
+      (n) => this._nodeIsMultiSelectable(n) && n.multiSelected
     );
   }
 
   public getNodeById(id: string): MultiSelectableTreeNode {
-    return this.getAllNodes().filter(n => n.id === id)[0];
+    return this.getAllNodes().filter((n) => n.id === id)[0];
   }
-	
-	public expandParents(node: TreeNode, expand: boolean): void{
-		if (!node || !node.parentNode) return;
-		this._setNodeExpanded(node.parentNode as MultiSelectableTreeNode, expand);
-		this.expandParents(node.parentNode, expand);
-	}
+
+  public expandParents(node: TreeNode, expand: boolean): void {
+    if (!node || !node.parentNode) return;
+    this._setNodeExpanded(node.parentNode as MultiSelectableTreeNode, expand);
+    this.expandParents(node.parentNode, expand);
+  }
 
   private _setNodeSelected(
     node: MultiSelectableTreeNode,
@@ -335,7 +341,7 @@ export class TreeComponent extends BaseComponent {
 
   public expandNode(node: TreeNode, expanded: boolean): void {
     if (!this._rootNode) return;
-    this._setNodeExpanded(node as MultiSelectableTreeNode, expanded)
+    this._setNodeExpanded(node as MultiSelectableTreeNode, expanded);
   }
 
   // walks down the tree using the specified path e.g. [2,2,0]
