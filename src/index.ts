@@ -104,11 +104,14 @@ export class TreeComponent extends BaseComponent {
           const data = tagCtx.view.data;
           (this as any).data = data;
 
-          const lang: string = data.data.__jsonld?.label["@language"];
           data.dir = "ltr";
 
-          if (lang && that._data.rtlLanguageCodes.includes(lang.trim())) {
-            data.dir = "rtl";
+          if (data.data.__jsonld.label) {
+            const lang: string = data.data.__jsonld.label["@language"];
+
+            if (lang && that._data.rtlLanguageCodes.includes(lang.trim())) {
+              data.dir = "rtl";
+            }
           }
         },
         onAfterLink: function () {
