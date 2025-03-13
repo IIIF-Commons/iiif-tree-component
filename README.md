@@ -1,23 +1,17 @@
 # iiif-tree-component
 
+## Getting started
+
     npm i
     npm run build
     npm start
 
-<!-- ## Publishing
+This will launch a demo on http://localhost:3000/examples that you can use for interactive testing.
 
-Checkout the `master` branch, and ensure it is up-to-date.
+## Making a release
 
-Run `npm version [major | minor | patch]` for example:
+First decide on a new version number (x.y.z) using [semantic versioning](https://semver.org/). Then run these commands, being sure to substitute the real version number for x.y.z below:
 
-```
-npm version patch
-```
-
-This will update the `package.json` version and create a git tag. Then push both the main/tag.
-
-```
-git push origin master v0.0.8
-```
-
-Then the GitHub action will pick up the tag and publish it to NPM -->
+    npm i
+    npm version x.y.z
+    npm publish
