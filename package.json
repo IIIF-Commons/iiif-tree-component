@@ -40,7 +40,7 @@
     "rimraf": "2.6.2",
     "serve": "^14.2.4",
     "typescript": "3.6.3",
-    "uglify-js": "3.4.9",
+    "uglify-js": "3.19.3",
     "webpack-cli": "^3.1.2",
     "webpack": "^4.28.3"
   },
