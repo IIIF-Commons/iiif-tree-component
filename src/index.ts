@@ -106,7 +106,7 @@ export class TreeComponent extends BaseComponent {
 
           data.dir = "ltr";
 
-          if (data.data.__jsonld.label) {
+          if (data.data.__jsonld && data.data.__jsonld.label) {
             const lang: string = data.data.__jsonld.label["@language"];
 
             if (lang && that._data.rtlLanguageCodes.includes(lang.trim())) {
