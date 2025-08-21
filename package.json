@@ -34,7 +34,7 @@
     "@types/node": "^8.10.52",
     "@types/jquery": "2.0.34",
     "awesome-typescript-loader": "^5.2.1",
-    "cross-env": "^5.2.1",
+    "cross-env": "^7.0.3",
     "dts-bundle-generator": "^9.5.1",
     "less": "3.13.1",
     "rimraf": "2.6.2",
